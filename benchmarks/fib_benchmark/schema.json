@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GUIAgentFIBTaskEpisode",
+  "description": "Log format for a single GUIAgent episode on the FIB simulator task.",
+  "type": "object",
+  "required": ["task_id", "episode_id", "env", "success", "summary", "grounding_metrics", "subtasks", "steps"],
+  "properties": {
+    "task_id": { "type": "string", "description": "Task identifier, e.g. 'FIB-Basic-Milling-01'." },
+    "episode_id": { "type": "string", "description": "Unique id for this run/episode." },
+    "env": { "type": "string", "description": "Environment name, e.g. 'FIB_Simulator'." },
+    "agent_name": { "type": "string", "description": "Optional. Name or version of the agent.", "nullable": true },
+    "success": { "type": "boolean", "description": "Whether the overall task is successfully completed (all subtasks F1–F20)." },
+    "timestamps": {
+      "type": "object",
+      "properties": {
+        "start_time": { "type": "string", "format": "date-time" },
+        "end_time": { "type": "string", "format": "date-time" },
+        "duration_sec": { "type": "number" }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": ["optimal_steps", "actual_steps", "step_efficiency"],
+      "properties": {
+        "optimal_steps": { "type": "integer", "minimum": 0 },
+        "actual_steps": { "type": "integer", "minimum": 0 },
+        "step_efficiency": { "type": "number", "minimum": 0 }
+      }
+    },
+    "grounding_metrics": {
+      "type": "object",
+      "properties": {
+        "widget_grounding_accuracy": { "type": "number", "minimum": 0, "maximum": 1 },
+        "text_grounding_accuracy": { "type": "number", "minimum": 0, "maximum": 1 },
+        "state_grounding_accuracy": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "subtasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["subtask_id", "name", "success", "attempts"],
+        "properties": {
+          "subtask_id": { "type": "string", "description": "F1–F20." },
+          "name": { "type": "string" },
+          "success": { "type": "boolean" },
+          "attempts": { "type": "integer", "minimum": 0 },
+          "difficulty": { "type": "string" },
+          "phase": { "type": "string" },
+          "grounding_focus": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["widget", "text", "state"] }
+          },
+          "success_criteria": { "type": "string" }
+        }
+      }
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "index": { "type": "integer" },
+          "timestamp_offset_sec": { "type": "number" },
+          "subtask_id": { "type": "string" },
+          "action_type": { "type": "string" },
+          "target": { "type": "object" },
+          "state_snapshot": { "type": "object" }
+        }
+      }
+    }
+  }
+}

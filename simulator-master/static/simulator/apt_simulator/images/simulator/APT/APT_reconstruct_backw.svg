@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="2653px" height="1515px" viewBox="0 0 2653 1515" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>APT_reconstruct_backw</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <radialGradient cx="205.017963%" cy="0%" fx="205.017963%" fy="0%" r="175.115512%" gradientTransform="translate(2.050180,0.000000),scale(0.571052,1.000000),translate(-2.050180,-0.000000)" id="radialGradient-1">
+            <stop stop-color="#F6F5F4" offset="0%"></stop>
+            <stop stop-color="#DED9D6" offset="11.4361837%"></stop>
+            <stop stop-color="#ADA6A1" offset="64.371498%"></stop>
+            <stop stop-color="#A39B98" offset="93.5346032%"></stop>
+            <stop stop-color="#847E7B" offset="100%"></stop>
+        </radialGradient>
+        <linearGradient x1="0%" y1="42.3718374%" x2="100%" y2="42.3718363%" id="linearGradient-2">
+            <stop stop-color="#BFBAB8" offset="0%"></stop>
+            <stop stop-color="#E6E6E5" offset="2.60901797%"></stop>
+            <stop stop-color="#E6E6E5" offset="52.2999748%"></stop>
+            <stop stop-color="#E6E6E5" offset="97.6166816%"></stop>
+            <stop stop-color="#BFBAB8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0%" y1="50.0003994%" x2="100%" y2="50.0003994%" id="linearGradient-3">
+            <stop stop-color="#3E3D3C" offset="0%"></stop>
+            <stop stop-color="#E6E6E5" offset="49.6610351%"></stop>
+            <stop stop-color="#E6E6E5" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-4" x="0" y="0" width="550" height="1488" rx="10"></rect>
+        <rect id="path-5" x="0" y="0" width="2064" height="1488" rx="17"></rect>
+        <linearGradient x1="51.2544572%" y1="-3.58360834%" x2="51.2544572%" y2="104.488678%" id="linearGradient-6">
+            <stop stop-color="#BFBAB8" offset="0%"></stop>
+            <stop stop-color="#E6E6E5" offset="10.3323699%"></stop>
+            <stop stop-color="#E6E6E5" offset="52.2999748%"></stop>
+            <stop stop-color="#E6E6E5" offset="89.757948%"></stop>
+            <stop stop-color="#BFBAB8" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-7" x="0" y="1" width="2038" height="1458" rx="10"></rect>
+        <path d="M0,59 L2038,59 L2038,1450 C2038,1455.52285 2033.52285,1460 2028,1460 L10,1460 C4.4771525,1460 6.76353751e-16,1455.52285 0,1450 L0,59 Z" id="path-8"></path>
+        <filter x="-0.2%" y="-0.3%" width="100.4%" height="100.6%" filterUnits="objectBoundingBox" id="filter-9">
+            <feMorphology radius="1" operator="erode" in="SourceAlpha" result="shadowSpreadInner1"></feMorphology>
+            <feGaussianBlur stdDeviation="3" in="shadowSpreadInner1" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="1" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="APT_reconstruct_backw" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="#FFFFFF" x="0" y="0" width="2653" height="1515"></rect>
+        <path d="M0,0 L2653,0 L2653,1501.60872 C2653,1509.00452 2646.28427,1515 2638,1515 L15,1515 C6.71572875,1515 1.01453063e-15,1509.00452 0,1501.60872 L0,0 Z" id="backgw" fill="url(#radialGradient-1)" fill-rule="nonzero"></path>
+        <g id="controls" transform="translate(2090.000000, 13.000000)">
+            <g id="rectangle-controls">
+                <use fill="url(#linearGradient-2)" xlink:href="#path-4"></use>
+                <use fill-opacity="0.02" fill="url(#linearGradient-3)" style="mix-blend-mode: difference;" xlink:href="#path-4"></use>
+            </g>
+        </g>
+        <g id="main-area" transform="translate(13.000000, 13.000000)">
+            <g id="MICROGRAPH-AREA" fill-rule="nonzero">
+                <rect stroke="#EAE6E4" stroke-width="4" stroke-linejoin="square" fill="#D8D8D8" fill-rule="evenodd" x="2" y="2" width="2060" height="1484" rx="17"></rect>
+                <rect stroke="#979797" stroke-width="1" x="-0.5" y="-0.5" width="2065" height="1489" rx="17"></rect>
+            </g>
+            <g id="spectrum" transform="translate(13.000000, 899.000000)"></g>
+            <g id="field-evaporation" transform="translate(13.000000, 14.000000)" fill-rule="nonzero">
+                <g id="path-12-copy-2">
+                    <use fill="url(#linearGradient-6)" xlink:href="#path-7"></use>
+                    <use fill-opacity="0.02" fill="url(#linearGradient-3)" style="mix-blend-mode: difference;" xlink:href="#path-7"></use>
+                    <rect stroke="#EAE6E4" stroke-width="4" x="-2" y="-1" width="2042" height="1462" rx="10"></rect>
+                </g>
+                <g id="path-12-copy-3">
+                    <use fill="#FFFFFF" xlink:href="#path-8"></use>
+                    <use fill="black" fill-opacity="1" filter="url(#filter-9)" xlink:href="#path-8"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

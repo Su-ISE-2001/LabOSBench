@@ -1,0 +1,250 @@
+/*! 
+ * Custom jQuery drop dow style
+ * Forked  by Andres Vasquez for AMMRF'S https://www.myscope.training 
+ * info@andresvasquez.net  â€”â€” https://www.andresvasquez.net â€”â€”
+ * Forked from: jQuery UI CSS Framework 1.12.1 and jQuery UI - v1.12.1 - 2016-09-14
+ * http://jqueryui.com
+ * Copyright jQuery Foundation and other contributors; Licensed MIT */
+
+
+
+/* Layout helpers
+----------------------------------*/
+.ui-front {
+	z-index: 100;
+}
+
+/* Icons
+----------------------------------*/
+.ui-icon {
+	display: inline-block;
+	vertical-align: middle;
+	margin-top: -.25em;
+	position: relative;
+	text-indent: -99999px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+}
+
+
+/* Misc visuals
+----------------------------------*/
+
+/* Overlays */
+.ui-menu {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: block;
+	outline: 0;
+}
+
+.ui-menu .ui-menu-item {
+	margin: 0;
+	cursor: pointer;
+	/* support: IE10, see #8844 */
+	list-style-image: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
+}
+.ui-menu .ui-menu-item-wrapper {
+	position: relative;
+	padding: 3px 1em 3px .4em;
+}
+
+.ui-menu .ui-state-focus,
+.ui-menu .ui-state-active {
+	margin: -1px;
+}
+
+/* right-aligned */
+.ui-button {
+	padding: .4em 1em;
+	display: inline-block;
+	position: relative;
+	line-height: normal;
+	margin-right: .1em;
+	cursor: pointer;
+	vertical-align: middle;
+	text-align: center;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+    color: #3f3731;
+/*    text-decoration: none;*/
+	/* Support: IE <= 11 */
+	overflow: visible;
+}
+
+.ui-button,
+.ui-button:link,
+.ui-button:visited,
+.ui-button:hover,
+.ui-button:active {
+	text-decoration: none;
+}
+.ui-selectmenu-menu {
+	padding: 0;
+	margin: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+}
+.ui-selectmenu-menu .ui-menu {
+	overflow: auto;
+	overflow-x: hidden;
+	padding-bottom: 1px;
+}
+.ui-selectmenu-open {
+	display: block;
+}
+.ui-selectmenu-text {
+	display: block;
+	margin-right: 17px;
+    margin-top: 0.2vw;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    font-weight: 700;
+    font-size: 1vw;
+}
+fieldset .ui-selectmenu-button.ui-button {
+	text-align: left;
+	white-space: nowrap;
+/*	width: 14em;*/
+}
+.ui-selectmenu-icon.ui-icon {
+	float: right;
+	margin-top: 0;
+    left: 0.5vw;
+}
+/* Component containers
+----------------------------------*/
+.ui-widget {
+	font-size: 1em;
+}
+
+[id$="-menu"]{
+	border: 1px solid #b9b0a4;
+	background: #ffffff;
+	color: #333333;
+}
+
+.ui-menu .ui-state-disabled .ui-menu-item-wrapper {
+    color: #cac7c5;
+    cursor: not-allowed;
+}
+
+/* Interaction states
+----------------------------------*/
+
+.ui-widget-header .ui-state-hover,
+.ui-widget-header .ui-state-focus,
+.ui-button:hover,
+fieldset .ui-button:focus {
+	border: 1px solid #cccccc;
+	background: #ededed;
+	font-weight: normal;
+	color: #2b2b2b;
+}
+
+.ui-icon {
+	width: 16px;
+	height: 16px;
+}
+
+/* positioning */
+.ui-icon-triangle-1-s { background-position: -65px -16px; }
+
+/* Interaction states */
+
+fieldset .ui-state-default,
+fieldset .ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.ui-button,
+html .ui-button.ui-state-disabled:hover,
+html .ui-button.ui-state-disabled:active {
+    border: 1px solid #948e8d;
+    background: #ede4d4 url("/static/simulator/xrd_simulator/images/simulator/APT/btn_drop.png") 0 47% repeat-x;
+    font-weight: normal;
+    color: #3f3731;
+}
+
+fieldset .ui-button:hover,
+fieldset .ui-button:focus {
+    border: 1px solid #b9b0a4;
+    background: #f5f0e5 url("/static/simulator/xrd_simulator/images/simulator/APT/btn_drop_hov.png") 0 47% repeat-x;
+    font-weight: normal;
+    color: #5f482b;
+}
+
+[id$="-menu"] li .ui-state-active,
+.ui-widget-header .ui-state-active,
+a.ui-button:active,
+.ui-button:active,
+.ui-button.ui-state-active:hover {
+    border: 1px solid #b9b0a4;
+    background: #f4f0ec url("/static/simulator/xrd_simulator/images/simulator/APT/ui-bg_highlight-hard_100_f4f0ec_1x100.png") 50% 50% repeat-x;
+    font-weight: 700;
+    color: #7b664b;
+    cursor: pointer;
+}
+
+
+/* states and images */
+
+.ui-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.ui-state-hover .ui-icon,
+.ui-state-focus .ui-icon,
+.ui-button:hover .ui-icon,
+.ui-button:focus .ui-icon {
+    background-image: url("/static/simulator/xrd_simulator/images/simulator/APT/arrow_drop.png");
+}
+
+span.ui-state-disabled {
+    opacity: .35;
+    cursor: not-allowed !important;
+}
+
+.ui-button .ui-icon {
+    background-image: url("/static/simulator/xrd_simulator/images/simulator/APT/arrow_drop.png");
+}
+
+/* positioning */
+
+.ui-icon-triangle-1-s {
+    background-position: 0 0;
+}
+
+/* Corner radius */
+
+.ui-corner-all,
+.ui-corner-top,
+.ui-corner-left,
+.ui-corner-tl {
+    border-top-left-radius: 6px;
+}
+
+.ui-corner-all,
+.ui-corner-top,
+.ui-corner-right,
+.ui-corner-tr {
+    border-top-right-radius: 6px;
+}
+
+.ui-corner-all,
+.ui-corner-bottom,
+.ui-corner-left,
+.ui-corner-bl {
+    border-bottom-left-radius: 6px;
+}
+
+.ui-corner-all,
+.ui-corner-bottom,
+.ui-corner-right,
+.ui-corner-br {
+    border-bottom-right-radius: 6px;
+}

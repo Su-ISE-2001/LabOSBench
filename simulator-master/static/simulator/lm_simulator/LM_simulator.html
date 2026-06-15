@@ -1,0 +1,967 @@
+<!doctype html>
+<!-- 
+Created  by Andres Vasquez for Microscopy Australia https://www.myscope.training  —— https://www.andresvasquez.net ——
+copyright:This work is licensed under a Creative Commons Attribution 4.0 International License.
+-->
+<!--< >-->
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Light &amp; Fluorescence Microscopy</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/LM_simulator.css">
+    <link rel="stylesheet" href="css/custom-dd-jquery-ui.css">
+    <link rel="stylesheet" href="css/jquery-ui-slider-pips.min.css">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <!-- LFM benchmark logger：用于记录 GUIAgent 在 LFM 明场成像任务中的行为与指标 -->
+    <script src="/static/benchmark_lfm.js"></script>
+</head>
+
+<body>
+    <div id="top-bar" class="flex-evenly">
+        <div class="flex" id="top-bar-left">
+            <a id="myscope-logo" href="http://localhost" title="Start Page"></a>
+        </div>
+
+        <div id="top-instructions">
+            <p id="top-instructions-txt">Drag and drop the sample H&amp;E Kidney sample onto the microscope stage.</p>
+        </div>
+
+    </div>
+    <div id="bf" class="simulator-base">
+        <div id="bf-micrographs" class="flex-between micrographs">
+            <div id="bf-instructions" class="bf-micrograph-sides">
+                <p id="bf-instructions-txt"></p>
+                <button type="button" id="bf-back-btn" class="btn back-btn btn-disabled" value="0" disabled>&lt;&lt; BACK</button>
+            </div>
+            <div id="bf-micrograph-mid">
+                <div id="bf-canvas-mid" class="mid-element totally-hidden bf-canvas-mid">
+                    <img id="bf-mid-img" />
+                </div>
+                <div id="bf-microimgs" class="mid-element totally-hidden">
+                    <img /><img /><img /><img /><img /><img /><img /><img /><img /><img /><img /><img />
+                    <img id="bf-noeyepiece" class='bf-invisible' src="images/simulator/LM/micrographs/10x_kidney_10.jpg" />
+                    <img id="bf-wh-balance" class='bf-invisible' src="images/simulator/LM/micrographs/10x_kidney_11.jpg" />
+                </div>
+                <svg id="eyepiece-svg" viewBox="0 0 750 750" class="mid-element totally-hidden">
+                    <defs>
+                        <filter x="-6.5%" y="-6.5%" width="113.0%" height="113.0%" filterUnits="objectBoundingBox" id="filter-1">
+                            <feGaussianBlur id="diaphg-blur" stdDeviation="2" in="SourceGraphic"></feGaussianBlur>
+                        </filter>
+                        <clipPath id="svg-mask">
+                            <circle fill="#0000ff" cx="375" cy="376" r="353"></circle>
+                        </clipPath>
+                        <radialGradient cx="49.4285714%" cy="49.0112695%" fx="49.4285714%" fy="49.0112695%" r="58.7094163%" gradientTransform="translate(0.494286,0.490113),rotate(48.138594),scale(1.000000,0.999959),translate(-0.494286,-0.490113)" id="radialGradient-1">
+                            <stop stop-color="#FFFFFF" offset="0%"></stop>
+                            <stop stop-color="#D4D1D1" offset="70.9814288%"></stop>
+                            <stop stop-color="#F1F1F1" offset="89.8475235%"></stop>
+                            <stop stop-color="#A4A6A7" offset="100%"></stop>
+                        </radialGradient>
+                    </defs>
+                    <g id="eyepiece" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g clip-path="url(#svg-mask)">
+                            <path d="M375.5,343 L352.51903,352.51903 L343,375.5 L352.51903,398.48097 L375.5,408 L398.48097,398.48097 L408,375.5 L398.48097,352.51903 L375.5,343 Z" id="diaphragm-penta" stroke="#191111" stroke-width="6" filter="url(#filter-1)" style="transform: translate(90px, -110px) scale(10, 10) rotate(60deg);"></path>
+                        </g>
+                        <g id="diaphragm-move" clip-path="url(#svg-mask)">
+                            <path d="M875,-125 L875,875 L-125,875 L-125,-125 L875,-125 Z M375.5,343 L352.51903,352.51903 L343,375.5 L352.51903,398.48097 L375.5,408 L398.48097,398.48097 L408,375.5 L398.48097,352.51903 L375.5,343 Z" id="diaphragm" fill="#191111" style="transform: translate(90px, -110px) scale(10, 10) rotate(60deg);"></path>
+                        </g>
+                        <circle id="eyepiece-off" stroke="url(#radialGradient-1)" stroke-width="16" cx="375" cy="376" r="353"></circle>
+                        <circle id="eyepiece-on" stroke="#000000" stroke-width="20" cx="375" cy="376" r="355"></circle>
+                    </g>
+                </svg>
+            </div>
+            <div id="bf-micrograph-right" class="bf-micrograph-sides">
+                <svg viewBox="0 0 1246 1511" id="svg-dd-sample" class="bf-canvas-sides"></svg>
+            </div>
+        </div>
+        <div id="bf-controls-bottom" class="flex-between">
+            <div id="bf-mode" class="bf-controls bf-two-left disabledd-channel">
+                <div class="mode-title">
+                    <p class="mode-title-name">MICROSCOPE MODE</p>
+                </div>
+                <div class="mode-item flex">
+                    <input autocomplete="off" class="mode-available bf-checkbox" type="checkbox" id="bf-checkbox-up" onclick="modeCheck(this)">
+                    <p class="mode-item-name">SETUP &amp; BRIGHTFIELD</p>
+                </div>
+                <div class="mode-item flex">
+                    <input autocomplete="off" class="mode-available fluo-checkbox" type="checkbox" id="fluo-checkbox-up" onclick="modeCheck(this)" disabledd>
+                    <p class="mode-item-name">FLUORESCENCE</p>
+                </div>
+                <div class="mode-item flex">
+                    <input autocomplete="off" type="checkbox" id="" disabled>
+                    <p class="mode-item-name label-disabled">PHASE CONTRAST</p>
+                </div>
+                <div class="mode-item flex">
+                    <input autocomplete="off" type="checkbox" id="" disabled>
+                    <p class="mode-item-name label-disabled">DIC</p>
+                </div>
+                <div class="mode-item flex">
+                    <input autocomplete="off" type="checkbox" id="" disabled>
+                    <p class="mode-item-name label-disabled">POLARISED LIGHT</p>
+                </div>
+                <div class="mode-item flex">
+                    <input autocomplete="off" type="checkbox" id="" disabled>
+                    <p class="mode-item-name label-disabled">REFLECTION</p>
+                </div>
+                <div class="mode-item flex">
+                    <input autocomplete="off" type="checkbox" id="" disabled>
+                    <p class="mode-item-name label-disabled">DARK FIELD</p>
+                </div>
+                <div class="mode-item flex">
+                    <input autocomplete="off" class="mode-available conf-checkbox" type="checkbox" id="conf-checkbox-up" onclick="modeCheck(this)">
+                    <p class="mode-item-name">CONFOCAL</p>
+                </div>
+                <div class="mode-item flex">
+                    <input autocomplete="off" type="checkbox" id="" disabled>
+                    <p class="mode-item-name label-disabled">SUPER RESOLUTION</p>
+                </div>
+            </div>
+            <div id="bf-insert" class="bf-controls bf-two-left disabledd-channel">
+                <div id="insert-title" class="mode-title">
+                    <p class="mode-title-name label-disabled">INSERT</p>
+                </div>
+                <div class="insert-item flex div-disabled">
+                    <button tabindex="0" type="button" id="phase-btn" class=" lfm-btn bf-insert-btn btn-disabled" value="off" disabled> </button>
+                    <p class="mode-item-name">PHASE</p>
+                </div>
+                <div class="insert-item flex div-disabled">
+                    <button tabindex="0" type="button" id="dicfilter-btn" class=" lfm-btn bf-insert-btn btn-disabled" value="off" disabled> </button>
+                    <p class="mode-item-name">DIC FILTER</p>
+                </div>
+                <div class="insert-item flex div-disabled">
+                    <button tabindex="0" type="button" id="polrzfilter-btn" class=" lfm-btn bf-insert-btn btn-disabled" value="off" disabled> </button>
+                    <p class="mode-item-name">POLARISING FILTER</p>
+                </div>
+                <div class="insert-item flex div-disabled">
+                    <button tabindex="0" type="button" id="darkfr-btn" class=" lfm-btn bf-insert-btn btn-disabled" value="off" disabled> </button>
+                    <p class="mode-item-name">DARKFIELD RING</p>
+                </div>
+                <div id="tungst-div" class="insert-item flex div-disabled">
+                    <button tabindex="0" type="button" id="halogen-btn" class=" lfm-btn bf-insert-btn btn-disabled" value="off" disabled> </button>
+                    <p class="mode-item-name">HALOGEN LAMP</p>
+                </div>
+                <div class="insert-item flex div-disabled">
+                    <button tabindex="0" type="button" id="mercury-btn" class=" lfm-btn bf-insert-btn btn-disabled" value="off" disabled> </button>
+                    <p class="mode-item-name">MERCURY LAMP</p>
+                </div>
+            </div>
+
+            <div id="bf-mid-set" class="bf-controls">
+                <p id="bf-focus1-label" class="slider-label label-disabled">FOCUS</p>
+                <div id="bf-focus1" class="slider"></div>
+                <p id="bf-fdiaphragm-label" class="slider-label label-disabled">FIELD DIAPHRAGM</p>
+                <div id="bf-fdiaphragm" class="slider"></div>
+                <p id="eyepiece-label" class="sqr-label label-disabled">RIGHT EYEPIECE</p>
+                <button type="button" id="eyepiece-btn" class="btn btn-disabled" value="off" disabled>REMOVE</button>
+                <p id="bf-objectives-label" class="sqr-label label-disabled">OBJECTIVES</p>
+                <div id="objectives-btns-div" class="flex-evenly">
+                    <button type="button" id="10x-btn" class="btn btn-disabled" value="off" disabled>10X</button>
+                    <button type="button" id="40x-btn" class="btn btn-disabled" value="off" disabled>40X</button>
+                </div>
+            </div>
+
+            <div id="imaging-tab" class="flex bf-controls bf-tabs totally-hidden">
+                <div id="imaging-div">
+                    <p id="bf-moveslide-label" class="slider-label label-disabled">MOVE SLIDE</p>
+                    <div id="bf-moveslide" class="slider"></div>
+                    <p id="bf-lintensity-label" class="slider-label label-disabled">LIGHT INTENSITY</p>
+                    <div id="bf-lintensity" class="slider"></div>
+                    <button type="button" id="imgsoft-btn" class="btn btn-disabled" value="off" disabled>IMAGING SOFTWARE</button>
+                </div>
+                <div class="tab-btns-div">
+                    <button tabindex="0" type="button" id="condenser-btn"></button>
+                </div>
+            </div>
+
+            <div id="condenser-tab" class="flex bf-controls bf-tabs totally-hiddenn">
+                <div id="condenser-div">
+                    <div id="condenser-top-div" class="flex">
+                        <div id="condenserleft-div">
+                            <p id="cond-pos-label" class="label-disabled">CONDENSER POSITIONING</p>
+
+                            <div id="cond-pos-div" class="flex">
+                                <div class="cond-pos-div div-disabled">
+                                    <div class="spinn-l-1 spinn"></div>
+                                    <button id="cond-pos-x-down" class="spinn-l-2 spinn-btn spinn" disabled></button>
+                                    <div class="spinn-l-3 spinn"></div>
+                                </div>
+                                <div class="cond-pos-div div-disabled">
+                                    <button id="cond-pos-y-up" class="spinn-mid-1 spinn-btn spinn" disabled></button>
+                                    <div class="spinn-mid-2 spinn"> </div>
+                                    <button id="cond-pos-y-down" class="spinn-mid-3 spinn-btn spinn" disabled></button>
+                                </div>
+                                <div class="cond-pos-div div-disabled">
+                                    <div class="spinn-r-1 spinn"></div>
+                                    <button id="cond-pos-x-up" class="spinn-r-2 spinn-btn spinn" disabled></button>
+                                    <div class="spinn-r-3 spinn"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="condenser-sliders-div">
+                            <p id="bf-cfocus-label" class="slider-label label-disabled">CONDENSER FOCUS</p>
+                            <div id="bf-cfocus" class="slider"></div>
+                            <p id="bf-caperture-label" class="slider-label label-disabled">CONDENSER APERTURE</p>
+                            <div id="bf-caperture" class="slider"></div>
+                        </div>
+                    </div>
+                    <div>
+
+                        <p id="bf-cond-lintensity-label" class="slider-label label-disabled">LIGHT INTENSITY</p>
+                        <div id="bf-cond-lintensity" class="slider"></div>
+                    </div>
+                </div>
+                <div class="tab-btns-div">
+                    <button tabindex="0" type="button" id="imaging-btn"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="confocal" class="simulator-base flex totally-hidden">
+        <div id="left-panel">
+            <div id="bf-micrographs" class="flex micrographs">
+                <div id="micrograph-left" class="confocal-micrograph">
+                    <canvas id="canvas-left" class="micrograph-canvas"></canvas>
+                    <span id="label-l" class="monitor-label">CHANNEL 3</span>
+                </div>
+                <div id="micrograph-right" class="confocal-micrograph">
+                    <canvas id="canvas-right" class="micrograph-canvas"></canvas>
+                    <span id="label-r" class="monitor-label">CHANNEL 4</span>
+                </div>
+            </div>
+            <div id="conf-controls-bottom" class="flex-between">
+                <div id="channels" class="flex-between">
+                    <div id="conf-mode" class="sliders-set disabledd-channel">
+                        <div class="mode-title">
+                            <p class="mode-title-name">MICROSCOPE MODE</p>
+                        </div>
+                        <div class="mode-item flex">
+                            <input autocomplete="off" class="mode-available bf-checkbox" type="checkbox" id="bf-checkbox-dw" onclick="modeCheck(this)">
+                            <p class="mode-item-name">SETUP &amp; BRIGHTFIELD</p>
+                        </div>
+                        <div class="mode-item flex">
+                            <input autocomplete="off" class="mode-available fluo-checkbox" type="checkbox" id="fluo-checkbox-dw" onclick="modeCheck(this)" disabledd>
+                            <p class="mode-item-name">FLUORESCENCE</p>
+                        </div>
+                        <div class="mode-item flex">
+                            <input autocomplete="off" type="checkbox" id="" disabled>
+                            <p class="mode-item-name label-disabled">PHASE CONTRAST</p>
+                        </div>
+                        <div class="mode-item flex">
+                            <input autocomplete="off" type="checkbox" id="" disabled>
+                            <p class="mode-item-name label-disabled">DIC</p>
+                        </div>
+                        <div class="mode-item flex">
+                            <input autocomplete="off" type="checkbox" id="" disabled>
+                            <p class="mode-item-name label-disabled">POLARISED LIGHT</p>
+                        </div>
+                        <div class="mode-item flex">
+                            <input autocomplete="off" type="checkbox" id="" disabled>
+                            <p class="mode-item-name label-disabled">REFLECTION</p>
+                        </div>
+                        <div class="mode-item flex">
+                            <input autocomplete="off" type="checkbox" id="" disabled>
+                            <p class="mode-item-name label-disabled">DARK FIELD</p>
+                        </div>
+                        <div class="mode-item flex">
+                            <input autocomplete="off" class="mode-available conf-checkbox" type="checkbox" id="conf-checkbox-dw" onclick="modeCheck(this)">
+                            <p class="mode-item-name">CONFOCAL</p>
+                        </div>
+                        <div class="mode-item flex">
+                            <input autocomplete="off" type="checkbox" id="" disabled>
+                            <p class="mode-item-name label-disabled">SUPER RESOLUTION</p>
+                        </div>
+                    </div>
+                    <div id="channel-2" class="sliders-set disabled-channel">
+                        <div class="channel-title flex">
+                            <input autocomplete="off" type="checkbox" id="channel-2-checkbox" onclick="channelCheck(this,'channel-2')" disabled>
+                            <p class="channel-name">CHANNEL 2</p>
+                        </div>
+                        <p class="channel-subtitle">Ex 488 Em 500-550</p>
+                        <div class="channel-val-top flex-evenly">
+                            <p class="channel-level">100%</p>
+                            <p class="channel-level">80V</p>
+                            <p class="channel-level">60</p>
+                        </div>
+                        <div class="sliders-div flex">
+                            <div class="slider-margin">
+                                <div id="laser2" class="slider"></div>
+                            </div>
+                            <div class="slider-margin">
+                                <div id="gain2" class="slider"></div>
+                            </div>
+                            <div class="slider-margin">
+                                <div id="offset2" class="slider"></div>
+                            </div>
+                        </div>
+                        <div class="channel-val-bottom flex-evenly">
+                            <p class="channel-level">0%</p>
+                            <p class="channel-level">20V</p>
+                            <p class="channel-level">-60</p>
+                        </div>
+                        <div class="slider-names flex-evenly">
+                            <p class="channel-level">LASER</p>
+                            <p class="channel-level">GAIN (HV)</p>
+                            <p class="channel-level">OFFSET</p>
+                        </div>
+                    </div>
+                    <div id="channel-3" class="sliders-set disabled-channel">
+                        <div class="channel-title flex">
+                            <input autocomplete="off" type="checkbox" id="channel-3-checkbox" onclick="channelCheck(this,'channel-3')" disabled>
+                            <p class="channel-name">CHANNEL 3</p>
+                        </div>
+                        <p class="channel-subtitle">Ex 561 Em 570-600</p>
+                        <div class="channel-val-top flex-evenly">
+                            <p class="channel-level">100%</p>
+                            <p class="channel-level">80V</p>
+                            <p id="offs-txt-up" class="channel-level">60</p>
+                        </div>
+                        <div class="sliders-div flex">
+                            <div class="slider-margin">
+                                <div id="laser3" class="slider"></div>
+                            </div>
+                            <div class="slider-margin">
+                                <div id="gain3" class="slider"></div>
+                            </div>
+                            <div class="slider-margin">
+                                <div id="offset3" class="slider"></div>
+                            </div>
+                        </div>
+                        <div class="channel-val-bottom flex-evenly">
+                            <p class="channel-level">0%</p>
+                            <p class="channel-level">20V</p>
+                            <p id="offs-txt-dw" class="channel-level">-60</p>
+                        </div>
+                        <div class="slider-names flex-evenly">
+                            <p class="channel-level">LASER</p>
+                            <p class="channel-level">GAIN (HV)</p>
+                            <p class="channel-level">OFFSET</p>
+                        </div>
+                    </div>
+                    <div id="channel-4" class="sliders-set disabled-channel">
+                        <div class="channel-title flex">
+                            <input autocomplete="off" type="checkbox" id="channel-4-checkbox" onclick="channelCheck(this,'channel-4')" disabled>
+                            <p class="channel-name">CHANNEL 4</p>
+                        </div>
+                        <p class="channel-subtitle">Ex 640 Em 650-700</p>
+                        <div class="channel-val-top flex-evenly">
+                            <p class="channel-level">100%</p>
+                            <p class="channel-level">80V</p>
+                            <p class="channel-level">60</p>
+                        </div>
+                        <div class="sliders-div flex">
+                            <div class="slider-margin">
+                                <div id="laser4" class="slider"></div>
+                            </div>
+                            <div class="slider-margin">
+                                <div id="gain4" class="slider"></div>
+                            </div>
+                            <div class="slider-margin">
+                                <div id="offset4" class="slider"></div>
+                            </div>
+                        </div>
+                        <div class="channel-val-bottom flex-evenly">
+                            <p class="channel-level">0%</p>
+                            <p class="channel-level">20V</p>
+                            <p class="channel-level">-60</p>
+                        </div>
+                        <div class="slider-names flex-evenly">
+                            <p class="channel-level">LASER</p>
+                            <p class="channel-level">GAIN (HV)</p>
+                            <p class="channel-level">OFFSET</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="pinhole">
+                    <p id="zpinhole-title" class="pinhole-title pinhole-title-disabled">Z-STACK &amp; PINHOLE</p>
+                    <div id="pinhole-controls" class="flex">
+                        <div id="zpos-div">
+                            <p id="top-zpos-val" class="channel-level label-disabled">TOP Z-POS</p>
+                            <div id="zpos-slider-div" class="flex-evenly">
+                                <div class="zpos-slider-margin">
+                                    <div id="zpos"></div>
+                                </div>
+                            </div>
+                            <p id="zpos-label" class="channel-level slider-label label-disabled">BOTTOM<br>Z-POS</p>
+                        </div>
+                        <div id="pinhole-controls-right">
+                            <div id="pinhole-buttons" class="flex">
+                                <div id="pinhole-buttons-left">
+                                    <button type="button" id="topz-btn" class="btn btn-disabled" value="off" disabled>TOP Z</button>
+                                    <p id="topz-label" class="channel-level label-disabled">no set</p>
+                                    <button type="button" id="bottomz-btn" class="btn btn-disabled" value="off" disabled>BOTTOM Z</button>
+                                    <p id="bottomz-label" class="channel-level label-disabled">no set</p>
+                                    <form id="pinhole-form" class="optimised-disabled">
+                                        <input autocomplete="off" type="checkbox" id="optimised" onclick="optimise()" disabled> OPTIMISED
+                                    </form>
+                                </div>
+                                <div id="pinhole-buttons-right">
+                                    <fieldset id="pinhole-fieldset" class="short-dd">
+                                        <label id="slices-label" class="label-disabled">SLICES</label>
+                                        <select id="slices">
+                                            <option value="0" selected="selected"></option>
+                                            <option value="a"></option>
+                                            <option value="b"></option>
+                                            <option value="c"></option>
+                                            <option value="d"></option>
+                                        </select>
+                                        <label id="step-size-label" class="label-disabled">STEP SIZE</label>
+                                        <select id="step-size">
+                                            <option value="0" selected="selected"></option>
+                                            <option value="1">OPTIMAL</option>
+                                            <option value="2" disabled>0.1 µm</option>
+                                            <option value="3" disabled>0.25 µm</option>
+                                            <option value="4" disabled>0.5 µm</option>
+                                            <option value="5" disabled>1.0 µm</option>
+                                            <option value="6" disabled>2.5 µm</option>
+                                            <option value="7" disabled>5.0 µm</option>
+                                            <option value="8" disabled>7.5 µm</option>
+                                            <option value="9" disabled>10.0 µm</option>
+                                            <option value="10" disabled>20.0 µm</option>
+                                        </select>
+                                    </fieldset>
+                                    <div id="range" class="stats flex-evenly stats-disabled">
+                                        <div class="stats-name">
+                                            <p class="stat-title">RANGE</p>
+                                        </div>
+                                        <div class="stats-value">
+                                            <p class="stat-title"></p>
+                                        </div>
+                                    </div>
+
+                                    <button type="button" id="xzimage-btn" class="btn btn-disabled" value="off" disabled>X Z IMAGE</button>
+                                </div>
+                            </div>
+                            <div id="ost" class="stats flex-evenly label-disabled">
+                                <div class="stats-name">
+                                    <p class="stat-title">OPTICAL SECTION THICKNESS</p>
+                                </div>
+                                <div class="stats-value">
+                                    <p id="ost-txt" class="stat-title"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="controls-right">
+            <div id="topr-btns-div" class="flex-evenly">
+                <button type="button" id="lp-btn" class="btn" value="on" disabled>LIGHT PATH </button>
+                <button type="button" id="activities-btn" class="btn" value="on">ACTIVITIES MENU </button>
+            </div>
+            <div id="controls-right-top">
+                <div id="live-div" class="flex div-disabled">
+                    <button tabindex="0" type="button" id="live-btn" class="lfm-btn controls-btn" value="off" disabled> </button>
+                    <p>LIVE VIEW</p>
+                </div>
+                <div id="capture-div" class="flex div-disabled">
+                    <button tabindex="0" type="button" id="capture-btn" class="lfm-btn controls-btn" value="off" disabled> </button>
+                    <p>CAPTURE IMAGE</p>
+                </div>
+                <div id="capturez-div" class="flex div-disabled">
+                    <button tabindex="0" type="button" id="capturez-btn" class="lfm-btn controls-btn" value="off" disabled> </button>
+                    <p>CAPTURE Z-STACK</p>
+                </div>
+            </div>
+            <div id="controls-right-bottom">
+                <fieldset id="fieldset-right-up">
+                    <label id="look-up-label" class="label-disabled">LOOK-UP TABLE</label>
+                    <select id="look-up">
+                        <option value="0" selected="selected" disabled></option>
+                        <option value="1" disabled>GREYSCALE</option>
+                        <option value="2">UNDER/OVER</option>
+                        <option value="3" disabled>DEFAULT</option>
+                    </select>
+                    <label id="objective-label" class="label-disabled">OBJECTIVE</label>
+                    <select id="objective">
+                        <option value="0" disabledd></option>
+                        <option value="1">4x dry NA 0.10</option>
+                        <option value="2" selected="selected">10x dry NA 0.45</option>
+                        <option value="3">20x dry NA 0.80</option>
+                        <option value="4">40x dry NA 0.95</option>
+                        <option value="5">40x oil NA 1.20</option>
+                        <option value="6">60x oil NA 1.40</option>
+                        <option value="7">100x oil NA 1.40</option>
+                    </select>
+                    <label id="scan-mode-label" class="label-disabled">SCAN MODE</label>
+                    <select id="scan-mode">
+                        <option value="0" selected="selected" disabledd></option>
+                        <option value="1">SIMULTANEOUS</option>
+                        <option value="2">SEQUENTIAL</option>
+                    </select>
+                    <label id="image-size-label" class="label-disabled">IMAGE SIZE</label>
+                    <select id="image-size">
+                        <option value="0" selected="selected" disabled></option>
+                        <option value="1" disabled>2048 x 2048</option>
+                        <option value="2" disabled>1024 x 1024</option>
+                        <option value="3">512 x 512</option>
+                        <option value="4" disabled>256 x 256</option>
+                        <option value="5" disabled>128 x 128</option>
+                    </select>
+                </fieldset>
+                <fieldset class="right-bottom-row">
+                    <label id="pixel-dwell-label" class="label-disabled">PIXEL DWELL</label>
+                    <select id="pixel-dwell">
+                        <option value="0" selected="selected" disabledd></option>
+                        <option value="1">2 μsec</option>
+                        <option value="2">4 μsec</option>
+                        <option value="3">8 μsec</option>
+                        <option value="4">12 μsec</option>
+                    </select>
+                </fieldset>
+                <fieldset>
+                    <label id="pinhole-size-label" class="label-disabled">PINHOLE</label>
+                    <select id="pinhole-size">
+                        <option value="0" selected="selected" disabled></option>
+                        <option value="1" disabled>0.4 AU (closed)</option>
+                        <option value="2" disabled>0.6 AU</option>
+                        <option value="3" disabled>0.8 AU</option>
+                        <option value="4">1.0 AU</option>
+                        <option value="5" disabled>2.0 AU</option>
+                        <option value="6" disabled>3.0 AU</option>
+                        <option value="7" disabled>4.0 AU</option>
+                        <option value="8" disabled>OPEN</option>
+                    </select>
+                </fieldset>
+                <div id="fps-div" class="flex-between div-disabled">
+                    <div class="pixel-arr stats-r">
+                        <div class="stats-r-name">
+                            <p class="stats-r-title">SCAN RATE (FRAMES/SEC)</p>
+                        </div>
+                        <div class="stats-r-value">
+                            <p id="fps-txt" class="stats-r-title">0.5</p>
+                        </div>
+                    </div>
+                </div>
+                <p id="zoom-label" class="slider-label label-disabled">ZOOM</p>
+                <div id="zoom-slider" class="flex">
+                    <div id="zoom" class="slider"></div>
+                </div>
+                <p id="zoom-val" class="label-disabled"></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="imaging-modal" class="totally-hidden">
+        <div id="imaging-modal-top">
+            <h2>IMAGING SOFTWARE</h2> <span id="close-imaging" class="close-modal totally-hidden">×</span>
+        </div>
+
+        <button type="button" id="white-btn" class="imgsoft-btns btn btn-disabled" disabled>WHITE BALANCE</button>
+        <div id="exposure-div">
+            <p id="exposure-label" class="slider-label label-disabled">EXPOSURE TIME</p>
+            <div id="exposure" class="slider"></div>
+            <div id="exposure-vals" class="flex-between">
+                <p id="exposure-from" class="slider-label label-disabled">0ms</p>
+                <p id="exposure-to" class="slider-label label-disabled">8ms</p>
+            </div>
+        </div>
+        <button type="button" id="lut-btn" class="imgsoft-btns btn btn-disabled" disabled>LUT</button>
+        <button type="button" id="bf-capture-btn" class="imgsoft-btns btn btn-disabled" disabled>CAPTURE</button>
+    </div>
+
+    <div id="lut-modal" class="totally-hidden">
+        <div id="lut-modal-top">
+            <h2>HISTOGRAM</h2> <span id="close-lut" class="close-modal">×</span>
+        </div>
+        <div id="lut-imgs">
+            <img /><img id="lut-bck-img" />
+        </div>
+        <img id="spectrum-img" src="images/simulator/LM/micrographs/histogram-spectrum.jpg">
+    </div>
+
+    <div id="histogram-modal" class="totally-hidden">
+        <div id="histogram-modal-top">
+            <h2>HISTOGRAM</h2> <span id="close-histogram" class="close-modal totally-hidden">×</span>
+        </div>
+        <svg id="histogram-svg" viewBox="0 0 2005 1185">
+            <defs>
+                <linearGradient id="histogram-spectrum-a" x1="0%" x2="100%" y1="50%" y2="50%">
+                    <stop offset="0%" />
+                    <stop offset="100%" stop-color="#FC0001" />
+                </linearGradient>
+                <linearGradient id="histogram-spectrum-b" x1="0%" x2="100%" y1="50%" y2="50%">
+                    <stop offset="0%" />
+                    <stop offset="100%" stop-color="#00FD00" />
+                </linearGradient>
+                <linearGradient id="histogram-spectrum-c" x1="0%" x2="100%" y1="50%" y2="50%">
+                    <stop offset="0%" />
+                    <stop offset="100%" stop-color="#00F" />
+                </linearGradient>
+
+                <symbol id="spectrum-bar">
+                    <rect width="33.3%" height="40" fill="url(#histogram-spectrum-a)" />
+                    <rect width="33.3%" height="40" x="33.3%" fill="url(#histogram-spectrum-b)" />
+                    <rect width="33.3%" height="40" x="66.6%" fill="url(#histogram-spectrum-c)" />
+                </symbol>
+            </defs>
+            <g id="1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0.6">
+                <rect id="histogram-bf-10x-frame" fill="#FFFFFF" stroke="#837E7A" stroke-width="4" x="115" y="144" width="1790" height="924"></rect>
+                <rect id="histogram-bf-40x-frame" stroke="#979797" stroke-width="4" fill="#FFFFFF" x="72" y="73" width="1860" height="424"></rect>
+                <rect id="histogram-fluo-frame" stroke="#979797" stroke-width="4" fill="#FFFFFF" x="13" y="25" width="1980" height="470"></rect>
+                <path id="red" stroke="#691E1E" fill="#AF3232"></path>
+                <path id="green" stroke="#3B5825" fill="#5A9331"></path>
+                <path id="blue" stroke="#033E73" fill="#1B7DB0"></path>
+            </g>
+            <g>
+                <use id="spectrum-bar-1" xlink:href="#spectrum-bar" width="1794" x="113" y="1068" />
+                <use id="spectrum-bar-2" xlink:href="#spectrum-bar" width="1864" x="70" y="499.333" />
+                <use id="spectrum-bar-3" xlink:href="#spectrum-bar " width="1984" x="11" y="496" />
+            </g>
+        </svg>
+    </div>
+
+    <div id="instructions-modal" class="totally-hidden">
+        <p id="confocal-instructions-txt"></p>
+        <button type="button" id="confocal-back-btn" class="btn back-btn btn-disabled" value="0" disabled>&lt;&lt; BACK</button>
+    </div>
+
+    <div id="conf-scenarios-modal" class="totally-hidden">
+        <div id="conf-scenarios-modal-top">
+            <h2></h2> <span id="close-conf-scenarios" class="close-modal">&times;</span>
+        </div>
+        <div id="conf-scenarios" class="sliders-set disabledd-channel">
+            <div class="mode-title">
+                <p class="mode-title-name">ACTIVITIES MENU</p>
+            </div>
+            <div class="mode-item flex">
+                <input autocomplete="off" class="mode-available modal-checkbox" type="checkbox" id="conf-checkbox-01" onclick="modeCheck(this)">
+                <p class="mode-item-name">VISUALISING YOUR SAMPLE</p>
+            </div>
+            <div class="mode-item flex">
+                <input autocomplete="off" class="mode-available modal-checkbox" type="checkbox" id="conf-checkbox-02" onclick="modeCheck(this)">
+                <p class="mode-item-name">OBJECTIVE LENS</p>
+            </div>
+            <div class="mode-item flex">
+                <input autocomplete="off" class="mode-available modal-checkbox" type="checkbox" id="conf-checkbox-03" onclick="modeCheck(this)">
+                <p class="mode-item-name">PINHOLE</p>
+            </div>
+            <div class="mode-item flex">
+                <input autocomplete="off" class="mode-available modal-checkbox" type="checkbox" id="conf-checkbox-04" onclick="modeCheck(this)">
+                <p class="mode-item-name">PIXEL DWELL</p>
+            </div>
+            <div class="mode-item flex">
+                <input autocomplete="off" class="mode-available modal-checkbox" type="checkbox" id="conf-checkbox-05" onclick="modeCheck(this)">
+                <p class="mode-item-name">PIXEL ARRAYS</p>
+            </div>
+            <div class="mode-item flex">
+                <input autocomplete="off" class="mode-available modal-checkbox" type="checkbox" id="conf-checkbox-06" onclick="modeCheck(this)">
+                <p class="mode-item-name">MULTICHANNEL IMAGES</p>
+            </div>
+            <div class="mode-item flex">
+                <input autocomplete="off" class="mode-available modal-checkbox" type="checkbox" id="conf-checkbox-07" onclick="modeCheck(this)">
+                <p class="mode-item-name">3D &amp; Z-STACKS</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="fluograph-modal" class="totally-hidden">
+        <p id="spectra-tittle">Excitation–emission: example for viewing GFP</p>
+        <img id="fluograph-img" src="images/simulator/LM/micrographs/fluograph.png" />
+        <button type="button" id="fluograph-btn" class="btn back-btn" value="off">INSERT<br>RFP FILTER</button>
+    </div>
+
+    <div id="overlay10-modal" class="totally-hidden">
+        <h3 id="overlay10-txt">Click to see each channel and then combine the images into the overlay.</h3>
+        <div class="modal-title flex-between">
+            <div id="overlay10-btns-div" class="flex-evenly">
+                <button type="button" id="10rfp-btn" class="btn" value="off">RFP (594nm)</button>
+                <button type="button" id="10gfp-btn" class="btn" value="off">GFP (488nm)</button>
+                <button type="button" id="10dapi-btn" class="btn" value="off">DAPI (405nm)</button>
+                <button type="button" id="10overlay-btn" class="btn" value="off">OVERLAY</button>
+            </div>
+            <span id="close-overlay10" class="close-modal">×</span>
+        </div>
+        <div id="overlay10-blind">
+            <div class="flex">
+                <div id="overlay10-top-l" class="not-visible">
+                    <img class="composite-img" src="images/simulator/LM/micrographs/10x_composite_1.jpg" />
+                </div>
+                <div id="overlay10-top-r" class="not-visible">
+                    <img class="composite-img" src="images/simulator/LM/micrographs/10x_composite_2.jpg" />
+                </div>
+            </div>
+            <div class="flex">
+                <div id="overlay10-bottom-l" class="not-visible">
+                    <img class="composite-img" src="images/simulator/LM/micrographs/10x_composite_3.jpg" />
+                </div>
+                <div id="overlay10-bottom-r" class="not-visible">
+                    <img class="composite-img" src="images/simulator/LM/micrographs/10x_composite_4.jpg" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay40-modal" class="totally-hidden">
+        <h3 id="overlay40-txt">Click to see each channel and then combine the images into the overlay.</h3>
+        <div class="modal-title flex-between">
+            <div id="overlay40-btns-div" class="flex-evenly">
+                <button type="button" id="40rfp-btn" class="btn" value="off">RFP (594nm)</button>
+                <button type="button" id="40gfp-btn" class="btn" value="off">GFP (488nm)</button>
+                <button type="button" id="40dapi-btn" class="btn" value="off">DAPI (405nm)</button>
+                <button type="button" id="40overlay-btn" class="btn" value="off">OVERLAY</button>
+            </div>
+            <span id="close-overlay40" class="close-modal">×</span>
+        </div>
+        <div id="overlay40-blind">
+            <div class="flex">
+                <div id="overlay40-top-l" class="not-visible">
+                    <img class="composite-img" src="images/simulator/LM/micrographs/40x_composite_1.jpg" />
+                </div>
+                <div id="overlay40-top-r" class="not-visible">
+                    <img class="composite-img" src="images/simulator/LM/micrographs/40x_composite_2.jpg" />
+                </div>
+            </div>
+            <div class="flex">
+                <div id="overlay40-bottom-l" class="not-visible">
+                    <img class="composite-img" src="images/simulator/LM/micrographs/40x_composite_3.jpg" />
+                </div>
+                <div id="overlay40-bottom-r" class="not-visible">
+                    <img class="composite-img" src="images/simulator/LM/micrographs/40x_composite_4.jpg" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="pinhole01-modal" class="totally-hidden">
+        <div class="modal-title flex-between">
+            <p id="pinhole01-txt">Note how much brighter and blurrier the open pinhole image is and how much extra light comes from out of focus planes when the pinhole isn’t blocking it. This is obvious based on number of oversaturated red pixels.</p>
+            <span id="close-pinhole01" class="close-modal">&times;</span>
+        </div>
+        <div id="pinhole01-div">
+            <div class="flex">
+                <div id="pinhole01-l">
+                    <span id="pinhole01-label-1au" class="monitorp-label">PINHOLE = 1.0 AU</span>
+                    <img class="composite-img" src="images/simulator/LM/micrographs/confocal/pinhole_1_1.jpg" />
+                </div>
+                <div id="pinhole01-r">
+                    <span id="pinhole01-label-open" class="monitorp-label">PINHOLE = OPEN</span>
+                    <img class="composite-img" src="images/simulator/LM/micrographs/confocal/pinhole_1_2.jpg" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="pinhole02-modal" class="totally-hidden">
+        <div class="modal-title flex-between">
+            <p id="pinhole02-txt">Compare it with the images that you have just collected. If you close the pinhole too much, light can’t reach the detector.</p>
+            <span id="close-pinhole02" class="close-modal">&times;</span>
+        </div>
+        <div id="pinhole02-div">
+            <div class="flex">
+                <div id="pinhole02-l">
+                    <span id="pinhole02-label-1au" class="monitorp2-label">PINHOLE = 0.4 AU (closed)</span>
+                    <img class="composite-img" />
+                </div>
+                <div id="pinhole02-m">
+                    <span id="pinhole02-label-open" class="monitorp2-label">PINHOLE = OPEN</span>
+                    <img class="composite-img" />
+                </div>
+                <div id="pinhole02-r">
+                    <span id="pinhole02-label-closed" class="monitorp2-label">PINHOLE = 1.0 AU</span>
+                    <img class="composite-img" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dwell-modal" class="totally-hidden">
+        <div class="modal-title flex-between">
+            <p id="dwell-txt">At a Pixel Dwell Time of 12 µseconds (compared to a dwell time of 2.0 µseconds), the time to collect photons is increased by a factor of 6x. This means the image will be much BRIGHTER and the image scan rate will be much SLOWER. Most common dwell times are around the 2–5 µsecond range.</p>
+            <span id="close-dwell" class="close-modal">&times;</span>
+        </div>
+        <div id="dwell-div">
+            <div class="flex">
+                <div id="dwell-l">
+                    <span id="dwell-label-1" class="dwell-label">12 µsec</span>
+                    <img class="composite-img" />
+                </div>
+                <div id="dwell-m">
+                    <span id="dwell-label-2" class="dwell-label">2 µsec</span>
+                    <img class="composite-img" />
+                </div>
+                <div id="dwell-r">
+                    <span id="dwell-label-3" class="dwell-label">4 µsec</span>
+                    <img class="composite-img" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="multich-modal" class="totally-hidden">
+        <div class="modal-title flex-between">
+            <p id="multich-txt">The resulting image is a merge of both AlexaFluor568 and AlexaFluor647. <br>Save this image to compare it to a sequentially acquired image.</p>
+            <span id="close-multich" class="close-modal">&times;</span>
+        </div>
+        <div id="multich-div">
+            <img class="composite-img" />
+        </div>
+        <button type="button" id="save-multich-btn" class="btn" value="off">SAVE</button>
+    </div>
+
+    <div id="multich02-modal" class="totally-hidden">
+        <div class="modal-title flex-between">
+            <p id="multich02-txt">The resulting image is a merge of both AlexaFluor568 and AlexaFluor647 but scanned sequentially.</p>
+            <span id="close-multich02" class="close-modal">&times;</span>
+        </div>
+        <div id="multich02-div">
+            <img class="composite-img" />
+        </div>
+    </div>
+
+    <div id="multich03-modal" class="totally-hidden">
+        <div class="modal-title flex-between">
+            <p class="multich03-txt">Simultaneous</p>
+            <p class="multich03-txt">Sequential</p>
+            <span id="close-multich03" class="close-modal">&times;</span>
+        </div>
+        <div id="multich03-div">
+            <div class="flex">
+                <div id="multich03-l">
+                    <img class="composite-img" />
+                </div>
+                <div id="multich03-r">
+                    <img class="composite-img" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="canvasf-modal" class="totally-hidden">
+        <div id="micrograph-float" class="confocal-micrograph">
+            <canvas id="canvas-float" class="micrograph-canvas"></canvas>
+            <div id="monitor-label-div" class="flex-between"> <span id="label-f" class="monitor-label">CHANNEL 4</span><span id="close-canvasf" class="close-modal"> </span></div>
+        </div>
+    </div>
+
+    <div id="videoz-modal" class="totally-hidden">
+        <div class="modal-title flex-between">
+            <p id="videoz-txt">Channel 3 3D image projection and rotation.</p>
+            <span id="close-videoz" class="close-modal">&times;</span>
+        </div>
+        <video id="zstacks-video" type="video/mp4"> </video>
+        <div id="videoz-div">
+            <div id="videozstacks" class="slider"></div>
+        </div>
+    </div>
+
+    <div id="multich04-modal" class="totally-hidden">
+        <div class="modal-title flex-between">
+            <p id="multich04-txt">Note that each image is acquired frame by frame to ensure the absence of the spectral bleedthrough of the 568 into Channel 4 that was present in the simultaneous image.</p>
+            <span id="close-multich04" class="close-modal">&times;</span>
+        </div>
+        <div id="multich04-div">
+            <img class="composite-img" />
+        </div>
+    </div>
+
+    <div id="conf-svg-modal" class="totally-hidden">
+        <div id="conf-svg-modal-top">
+            <h2></h2> <span id="close-conf-svg" class="close-modal">&times;</span>
+        </div>
+        <svg viewBox="0 0 1246 1360" id="conf-svg"></svg>
+    </div>
+
+    <div id="conf-txt-modal" class="totally-hidden">
+        <div id="instructions-modal-top">
+            <h2></h2> <span id="close-conf-txt" class="close-modal">&times;</span>
+        </div>
+        <p id="confocal-txt">Please wait while the image scans</p>
+    </div>
+
+    <div id="zstacks-modal" class="totally-hidden">
+        <div id="zstacks-modal-top">
+            <h2></h2> <span id="close-zstacks" class="close-modal">&times;</span>
+        </div>
+        <img id="zstacks-img" />
+    </div>
+
+    <div id="planes-modal" class="flex any-modal totally-hidden">
+        <div class="modal-window modal-reconstruct">
+            <div class="modal-title flex-between">
+                <p>Diagram</p><span id="close-planes" class="close-modal">×</span>
+            </div>
+            <div class="modal-content">
+                <img src="images/simulator/LM/planes.svg" id="myScopeLogo" alt="myScope's logo">
+                <br>
+            </div>
+            <div class="invisible-margin"></div>
+        </div>
+    </div>
+
+    <div id="important-points-modal" class="flex any-modal totally-hidden">
+        <div class="modal-window modal-reconstruct">
+            <div class="modal-title flex-between">
+                <p>Important Points:</p><span id="close-important-points" class="close-modal">×</span>
+            </div>
+            <div id="important-points-div" class="modal-content">
+                <ol style='padding-left: 20px'>
+                    <li style='list-style-type:decimal;line-height: 29px;'>The plane of the optical section is the x,y plane.</li>
+                    <li style='list-style-type:decimal'>Moving the focus moves the sample stage in the z direction.</li>
+                    <li style='list-style-type:decimal;line-height: 22px;'>The purpose of the confocal pinhole is to block out-of-focus light from reaching the detector.</li>
+                </ol>
+            </div>
+            <div class="invisible-margin"></div>
+        </div>
+    </div>
+
+    <div id="modal-loading" class="flex any-modal">
+        <div class="modal-window">
+            <div class="modal-title flex-between">
+                <p>Loading resources</p>
+            </div>
+            <div class="flex modal-content">
+                <div class="loading-bar"> </div>
+            </div>
+            <div class="invisible-margin"></div>
+        </div>
+    </div>
+
+    <!--<div id="modal-resize" class="flex any-modal">
+        <div id="resize-window" class="modal-window">
+            <div class="modal-title flex-between">
+                <p>For an optimal experience:
+                </p><span id="close-resize" class="close-modal">×</span>
+            </div>
+            <div id="resize-content" class="modal-content">
+                <p>If the simulator extends beyond the lower edge of your screen, drag the side edge of your browser until the simulator fits properly within the window.</p>
+                <img src="images/simulator/resize.svg" id="resize-animation" alt="myScope's logo">
+                <br>
+            </div>
+            <div class="invisible-margin"></div>
+        </div>
+    </div>-->
+
+    <div id="modal-save" class="flex any-modal totally-hidden">
+        <div class="modal-window">
+            <div id="question-data-modal" class="modal-title flex-between">
+                <p>Well done! You have taken a confocal image. <br>Do you want to save the image?</p>
+            </div>
+            <div class="modal-content">
+                <div id="save-data-btns" class="flex-evenly">
+                    <button class="btn" id="save-image">Save</button>
+                </div>
+                <p>When ready, you can:</p>
+                <ul style='padding-left: 20px'>
+                    <li style='list-style-type:disc'><a href='LM_simulator_objective.html' class='default-link'>Continue to the Objective lens activity</a></li>
+                    <li style='list-style-type:disc'><a onClick="window.location.href=window.location.href" class='default-link'>Retake the activity</a></li>
+                    <li style='list-style-type:disc'><a href='http://localhost' class='default-link'>Go to Start Page</a></li>
+                </ul>
+            </div>
+            <div class="invisible-margin"></div>
+        </div>
+    </div>
+
+    <!--    <script src="js/light_paths.js"></script>-->
+    <script src='js/gsap/3.2.6/gsap.min.js'></script>
+    <script src='js/gsap/3.2.6/Draggable.min.js'></script>
+    <script src="js/LFM_instruction_steps.js"></script>
+    <script src="js/histogram.js"></script>
+    <script src="js/simulator_snippets.js"></script>
+    <script src="js/LFM_steps.js"></script>
+    <script src="js/LFM_steps_back.js"></script>
+    <script src="js/jquery-ui-slider-pips.min.js"></script>
+    <script src="js/LM_simulator.js"></script>
+</body></html>

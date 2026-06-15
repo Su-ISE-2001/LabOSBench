@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="google" content="notranslate">
+    <meta http-equiv="Content-Language" content="en">
+    <title>SEM Simulator - Single Step Test</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/SEM_simulator.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="simulator-base">        
+        <div id="controls-left">
+                    
+        <div id="logos-links">
+                <a id="myscope-logo"  href="http://localhost" title="Start Page"></a>
+        </div>
+            
+            <div id="top-controls">
+                <div class="flex-left">
+                    <button tabindex="5" type="button" id="btn-vent" class="btn btn-stay-pressed">VENT</button>
+                    <button tabindex="0" type="button" id="btn-chamber" class="btn btn-stay-pressed">OPEN</button>
+                    <button tabindex="0" type="button" id="btn-evacuate" class="btn btn-stay-pressed">EVACUATE</button>
+                </div>
+                <p>HT</p>
+                <button type="button" id="ht-btn" class="ht-btn"> </button>
+            </div>
+            <div id="sliders-controls">
+                <p class="slider-label">ACCELERATING VOLTAGE</p>
+                <div id="acc-volt" class="simulator-slider"></div>
+                <div class="slider-indicators">
+                    <div class="dot">
+                        <p>0Kv </p>
+                    </div>
+                    <div class="dot">
+                        <p>10Kv</p>
+                    </div>
+                    <div class="dot">
+                        <p>15Kv</p>
+                    </div>
+                    <div class="dot">
+                        <p>20Kv</p>
+                    </div>
+                    <div class="dot">
+                        <p>30Kv</p>
+                    </div>
+                </div>
+                <p class="slider-label">SPOT SIZE</p>
+                <div id="spot-size" class="simulator-slider"></div>
+                <div class="slider-indicators">
+                    <div class="dot">
+                        <p>1nm </p>
+                    </div>
+                    <div class="dot">
+                        <p>5nm </p>
+                    </div>
+                    <div class="dot">
+                        <p>10nm</p>
+                    </div>
+                    <div class="dot">
+                        <p>15nm</p>
+                    </div>
+                    <div class="dot">
+                        <p>20nm</p>
+                    </div>
+                </div>
+                <p class="slider-label">WORKING DISTANCE</p>
+                <div id="z-pos" class="simulator-slider"></div>
+                <div class="slider-indicators">
+                    <div class="dot">
+                        <p>25mm</p>
+                    </div>
+                    <div class="dot">
+                        <p>20mm</p>
+                    </div>
+                    <div class="dot">
+                        <p>15mm</p>
+                    </div>
+                    <div class="dot">
+                        <p>10mm</p>
+                    </div>
+                    <div class="dot">
+                        <p>5mm</p>
+                    </div>
+                    <div class="dot">
+                        <p>0mm</p>
+                    </div>
+                </div>
+            </div>
+            <div id="knob-sliders-controls">
+                <p class="slider-label">BRIGHTNESS</p>
+                <div id="slider-brightness" class="simulator-slider knob-aux-slider"></div>
+                <p class="slider-label">CONTRAST</p>
+                <div id="slider-contrast" class="simulator-slider knob-aux-slider"></div>
+                <p class="slider-label">MAGNIFICATION</p>
+                <div id="slider-magnification" class="simulator-slider knob-aux-slider"></div>
+                <p class="slider-label">FOCUS COARSE</p>
+                <div id="slider-focus-c" class="simulator-slider knob-aux-slider"></div>
+                <p class="slider-label">FOCUS FINE</p>
+                <div id="slider-focus-f" class="simulator-slider knob-aux-slider"></div>
+                <p class="slider-label">ASTIGMATISM X</p>
+                <div id="slider-astigmatism-x" class="simulator-slider knob-aux-slider"></div>
+                <p class="slider-label">ASTIGMATISM Y</p>
+                <div id="slider-astigmatism-y" class="simulator-slider knob-aux-slider"></div>
+            </div>
+            <div id="dials-controls-a">
+                <div class="knob-base">
+                    <div id="led-1-brightness" class="led-brightness"></div>
+                    <div id="led-2-brightness" class="led-brightness"></div>
+                    <div id="led-3-brightness" class="led-brightness"></div>
+                    <div id="led-4-brightness" class="led-brightness"></div>
+                    <div id="led-5-brightness" class="led-brightness"></div>
+                    <div id="led-6-brightness" class="led-brightness"></div>
+                    <div id="led-7-brightness" class="led-brightness"></div>
+                    <div id="led-8-brightness" class="led-brightness"></div>
+                    <div id="led-9-brightness" class="led-brightness"></div>
+                    <div id="led-10-brightness" class="led-brightness"></div>
+                    <div id="led-11-brightness" class="led-brightness"></div>
+                    <div id="led-12-brightness" class="led-brightness"></div>
+                    <div id="led-13-brightness" class="led-brightness"></div>
+                    <div id="led-14-brightness" class="led-brightness"></div>
+                    <div id="led-15-brightness" class="led-brightness"></div>
+                    <div id="led-16-brightness" class="led-brightness"></div>
+                    <div id="led-17-brightness" class="led-brightness"></div>
+                    <div id="led-18-brightness" class="led-brightness"></div>
+                    <div tabindex="0" id="brightness" class="knob" onfocus="keyRotation(this)" onfocusout="keyRotationEnds()"></div>
+                </div>
+                <div class="knob-base">
+                    <div id="led-1-contrast" class="led-contrast"></div>
+                    <div id="led-2-contrast" class="led-contrast"></div>
+                    <div id="led-3-contrast" class="led-contrast"></div>
+                    <div id="led-4-contrast" class="led-contrast"></div>
+                    <div id="led-5-contrast" class="led-contrast"></div>
+                    <div id="led-6-contrast" class="led-contrast"></div>
+                    <div id="led-7-contrast" class="led-contrast"></div>
+                    <div id="led-8-contrast" class="led-contrast"></div>
+                    <div id="led-9-contrast" class="led-contrast"></div>
+                    <div id="led-10-contrast" class="led-contrast"></div>
+                    <div id="led-11-contrast" class="led-contrast"></div>
+                    <div id="led-12-contrast" class="led-contrast"></div>
+                    <div id="led-13-contrast" class="led-contrast"></div>
+                    <div id="led-14-contrast" class="led-contrast"></div>
+                    <div id="led-15-contrast" class="led-contrast"></div>
+                    <div id="led-16-contrast" class="led-contrast"></div>
+                    <div id="led-17-contrast" class="led-contrast"></div>
+                    <div id="led-18-contrast" class="led-contrast"></div>
+                    <div tabindex="0" id="contrast" class="knob" onfocus="keyRotation(this)" onfocusout="keyRotationEnds()"></div>
+                </div>
+                <div class="knob-base">
+                    <div id="led-1-magnification" class="led-magnification"></div>
+                    <div id="led-2-magnification" class="led-magnification"></div>
+                    <div id="led-3-magnification" class="led-magnification"></div>
+                    <div id="led-4-magnification" class="led-magnification"></div>
+                    <div id="led-5-magnification" class="led-magnification"></div>
+                    <div id="led-6-magnification" class="led-magnification"></div>
+                    <div id="led-7-magnification" class="led-magnification"></div>
+                    <div id="led-8-magnification" class="led-magnification"></div>
+                    <div id="led-9-magnification" class="led-magnification"></div>
+                    <div id="led-10-magnification" class="led-magnification"></div>
+                    <div id="led-11-magnification" class="led-magnification"></div>
+                    <div id="led-12-magnification" class="led-magnification"></div>
+                    <div id="led-13-magnification" class="led-magnification"></div>
+                    <div id="led-14-magnification" class="led-magnification"></div>
+                    <div id="led-15-magnification" class="led-magnification"></div>
+                    <div id="led-16-magnification" class="led-magnification"></div>
+                    <div id="led-17-magnification" class="led-magnification"></div>
+                    <div id="led-18-magnification" class="led-magnification"></div>
+                    <div tabindex="0" id="magnification" class="knob" onfocus="keyRotation(this)" onfocusout="keyRotationEnds()"></div>
+                </div>
+            </div>
+            <div class="knob-txt">
+                <p class="knob-label">BRIGHTNESS</p>
+                <p class="knob-label">CONTRAST</p>
+                <p class="knob-label">MAGNIFICATION</p>
+            </div>
+            <div class="focus-astigm">
+                <p class="knob-label">FOCUS</p>
+                <p class="knob-label">ASTIGMATISM</p>
+            </div>
+            <div id="dials-controls-b">
+                <div class="knob-base">
+                    <div id="led-1-focus-c" class="led-focus-c"></div>
+                    <div id="led-2-focus-c" class="led-focus-c"></div>
+                    <div id="led-3-focus-c" class="led-focus-c"></div>
+                    <div id="led-4-focus-c" class="led-focus-c"></div>
+                    <div id="led-5-focus-c" class="led-focus-c"></div>
+                    <div id="led-6-focus-c" class="led-focus-c"></div>
+                    <div id="led-7-focus-c" class="led-focus-c"></div>
+                    <div id="led-8-focus-c" class="led-focus-c"></div>
+                    <div id="led-9-focus-c" class="led-focus-c"></div>
+                    <div id="led-10-focus-c" class="led-focus-c"></div>
+                    <div id="led-11-focus-c" class="led-focus-c"></div>
+                    <div id="led-12-focus-c" class="led-focus-c"></div>
+                    <div id="led-13-focus-c" class="led-focus-c"></div>
+                    <div id="led-14-focus-c" class="led-focus-c"></div>
+                    <div id="led-15-focus-c" class="led-focus-c"></div>
+                    <div id="led-16-focus-c" class="led-focus-c"></div>
+                    <div id="led-17-focus-c" class="led-focus-c"></div>
+                    <div id="led-18-focus-c" class="led-focus-c"></div>
+                    <div tabindex="0" id="focus-c" class="knob" onfocus="keyRotation(this)" onfocusout="keyRotationEnds()"></div>
+                </div>
+                <div class="empty-h"></div>
+                <div class="knob-base">
+                    <div id="led-1-astigmatism-x" class="led-astigmatism-x"></div>
+                    <div id="led-2-astigmatism-x" class="led-astigmatism-x"></div>
+                    <div id="led-3-astigmatism-x" class="led-astigmatism-x"></div>
+                    <div id="led-4-astigmatism-x" class="led-astigmatism-x"></div>
+                    <div id="led-5-astigmatism-x" class="led-astigmatism-x"></div>
+                    <div id="led-6-astigmatism-x" class="led-astigmatism-x"></div>
+                    <div id="led-7-astigmatism-x" class="led-astigmatism-x"></div>
+                    <div id="led-8-astigmatism-x" class="led-astigmatism-x"></div>
+                    <div id="led-9-astigmatism-x" class="led-astigmatism-x"></div>
+                    <div id="led-10-astigmatism-x" class="led-astigmatism-x"></div>
+                    <div id="led-11-astigmatism-x" class="led-astigmatism-x"></div>
+                    <div id="led-12-astigmatism-x" class="led-astigmatism-x"></div>
+                    <div id="led-13-astigmatism-x" class="led-astigmatism-x"></div>
+                    <div id="led-14-astigmatism-x" class="led-astigmatism-x"></div>
+                    <div id="led-15-astigmatism-x" class="led-astigmatism-x"></div>
+                    <div id="led-16-astigmatism-x" class="led-astigmatism-x"></div>
+                    <div id="led-17-astigmatism-x" class="led-astigmatism-x"></div>
+                    <div id="led-18-astigmatism-x" class="led-astigmatism-x"></div>
+                    <div tabindex="0" id="astigmatism-x" class="knob" onfocus="keyRotation(this)" onfocusout="keyRotationEnds()"></div>
+                </div>
+                <div class="empty-h"></div>
+            </div>
+            <div class="knob2-txt">
+                <p class="knob-label">COARSE</p>
+                <p class="knob-label">X</p>
+            </div>
+            <div id="dials-controls-c">
+                <div class="empty-h"></div>
+                <div class="knob-base">
+                    <div id="led-1-focus-f" class="led-focus-f"></div>
+                    <div id="led-2-focus-f" class="led-focus-f"></div>
+                    <div id="led-3-focus-f" class="led-focus-f"></div>
+                    <div id="led-4-focus-f" class="led-focus-f"></div>
+                    <div id="led-5-focus-f" class="led-focus-f"></div>
+                    <div id="led-6-focus-f" class="led-focus-f"></div>
+                    <div id="led-7-focus-f" class="led-focus-f"></div>
+                    <div id="led-8-focus-f" class="led-focus-f"></div>
+                    <div id="led-9-focus-f" class="led-focus-f"></div>
+                    <div id="led-10-focus-f" class="led-focus-f"></div>
+                    <div id="led-11-focus-f" class="led-focus-f"></div>
+                    <div id="led-12-focus-f" class="led-focus-f"></div>
+                    <div id="led-13-focus-f" class="led-focus-f"></div>
+                    <div id="led-14-focus-f" class="led-focus-f"></div>
+                    <div id="led-15-focus-f" class="led-focus-f"></div>
+                    <div id="led-16-focus-f" class="led-focus-f"></div>
+                    <div id="led-17-focus-f" class="led-focus-f"></div>
+                    <div id="led-18-focus-f" class="led-focus-f"></div>
+                    <div tabindex="0" id="focus-f" class="knob" onfocus="keyRotation(this)" onfocusout="keyRotationEnds()"></div>
+                </div>
+                <div class="empty-h"></div>
+                <div class="knob-base">
+                    <div id="led-1-astigmatism-y" class="led-astigmatism-y"></div>
+                    <div id="led-2-astigmatism-y" class="led-astigmatism-y"></div>
+                    <div id="led-3-astigmatism-y" class="led-astigmatism-y"></div>
+                    <div id="led-4-astigmatism-y" class="led-astigmatism-y"></div>
+                    <div id="led-5-astigmatism-y" class="led-astigmatism-y"></div>
+                    <div id="led-6-astigmatism-y" class="led-astigmatism-y"></div>
+                    <div id="led-7-astigmatism-y" class="led-astigmatism-y"></div>
+                    <div id="led-8-astigmatism-y" class="led-astigmatism-y"></div>
+                    <div id="led-9-astigmatism-y" class="led-astigmatism-y"></div>
+                    <div id="led-10-astigmatism-y" class="led-astigmatism-y"></div>
+                    <div id="led-11-astigmatism-y" class="led-astigmatism-y"></div>
+                    <div id="led-12-astigmatism-y" class="led-astigmatism-y"></div>
+                    <div id="led-13-astigmatism-y" class="led-astigmatism-y"></div>
+                    <div id="led-14-astigmatism-y" class="led-astigmatism-y"></div>
+                    <div id="led-15-astigmatism-y" class="led-astigmatism-y"></div>
+                    <div id="led-16-astigmatism-y" class="led-astigmatism-y"></div>
+                    <div id="led-17-astigmatism-y" class="led-astigmatism-y"></div>
+                    <div id="led-18-astigmatism-y" class="led-astigmatism-y"></div>
+                    <div tabindex="0" id="astigmatism-y" class="knob" onfocus="keyRotation(this)" onfocusout="keyRotationEnds()"></div>
+                </div>
+            </div>
+            <div class="knob3-txt">
+                <div class="empty-h"></div>
+                <p class="knob-label">FINE</p>
+                <div class="empty-h"></div>
+                <p class="knob-label">Y</p>
+            </div>
+        </div>
+        <div id="right-panel">
+            <div id="top-instructions">
+                <p id="top-instructions-txt">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+            <div class="top-btns flex-div">
+                <div id="se" class="switch-div flex-div">
+                    <p>SE</p>
+                    <label class="switch">
+                        <input type="checkbox" id="btn-se"> <span class="slider round"></span> </label>
+                    <p>BSE</p>
+                </div>
+                <div id="btns-right" class="flex-right">
+                    <button type="button" id="btn-tvrate" class="btn">TV RATE</button>
+                    <button type="button" id="btn-scan1" class="btn">SLOW SCAN 1</button>
+                    <button type="button" id="btn-scan2" class="btn">SLOW SCAN 2</button>
+                    <button type="button" id="btn-save" class="btn">SAVE IMAGE</button>
+                    <button type="button" id="btn-print" class="btn" onclick="printCanvas('micrograph');">PRINT IMAGE</button>
+                </div>
+            </div>
+            <div class="choose-sample totally-hidden"></div>
+            <div class="broken flex-div totally-hidden">
+                <div><img src="images/simulator/warning.svg" id="warning" alt="Warning sign">
+                    <br>
+                    <p>YOU HAVE DESTROYED THE SAMPLE STAGE</p>
+                    <br>
+                    <button type="button" id="btn-reload" class="btn">START AGAIN</button>
+                </div>
+            </div>
+            <div id="micrograph-wrapper" title="双击图像：将点击位置移到画面中心（高倍时有效）">
+                <canvas id="micrograph"></canvas>
+                <div id="sem-pan-toolbar" class="sem-pan-toolbar" title="高倍下平移视场；双击图像将点击处移到画面中心">
+                    <button type="button" id="sem-pan-up" class="sem-pan-btn" aria-label="向上平移">↑</button>
+                    <div class="sem-pan-mid">
+                        <button type="button" id="sem-pan-left" class="sem-pan-btn" aria-label="向左平移">←</button>
+                        <button type="button" id="sem-pan-center" class="sem-pan-btn sem-pan-center" aria-label="居中">⊙</button>
+                        <button type="button" id="sem-pan-right" class="sem-pan-btn" aria-label="向右平移">→</button>
+                    </div>
+                    <button type="button" id="sem-pan-down" class="sem-pan-btn" aria-label="向下平移">↓</button>
+                </div>
+            </div>
+            <div class="instructionsPanel flex-div totally-hidden">
+                <button type="button" id="ok-keepWorking" class="btn">OK, GOT IT!</button>
+            </div>
+            <div id="scalebar-div" class="flex-div totally-hidden">
+                <div id="scalebar"></div>
+                <p id="scale-unit"></p>
+            </div>
+        </div>
+    </div>
+    <div class="example-content totally-hidden">
+        <div class="example-section-top menu-icons">
+            <h2>OPTIMAL MICROGRAPH</h2> <span id="close-example">&times;</span></div> <img id="example-img" alt="Example of a good micrograph"> </div>
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="0">
+        <filter id="myblurfilter">
+            <feGaussianBlur id="focus-blur" stdDeviation="0" result="blur" /> </filter>
+    </svg>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/TweenMax.min.js"></script>
+    <script src="js/Draggable.min.js"></script>
+    <script src="js/easeljs-0.8.2.min.js"></script>
+    <script src="js/SEM_samples.config.js"></script>
+    <script src="js/SEM_simulator.js"></script>
+    <script src="js/sem_mosaic_roi.js"></script>
+    <!-- 单步测试 API：跳转到指定子任务前置状态 -->
+    <script src="/static/sem_single_step_api.js"></script>
+    <script src="/static/benchmark_sem.js"></script>
+</body>
+
+</html>

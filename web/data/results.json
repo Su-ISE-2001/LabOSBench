@@ -1,0 +1,497 @@
+{
+  "brand": "LabOSBench",
+  "paper": {
+    "title": "LabOSBench: Benchmarking Computer Use Agents towards Scientific Instrument Control",
+    "subtitle": "Benchmarking computer-use agents for scientific instrument control",
+    "authors_list": [
+      { "name": "Anqi Zou", "affiliations": [1, 2] },
+      { "name": "Han Deng", "affiliations": [1, 3] },
+      { "name": "Chengyu Zhang", "affiliations": [1] },
+      { "name": "Junquan Hu", "affiliations": [1, 2] },
+      { "name": "Yu Wang", "affiliations": [1, 2] },
+      { "name": "Yuxiang Xing", "affiliations": [1, 2] },
+      { "name": "Aokai Zhang", "affiliations": [1, 2] },
+      { "name": "Hanling Zhang", "affiliations": [1, 3] },
+      { "name": "Zhaoyang Liu", "affiliations": [4], "corresponding": true },
+      { "name": "Ben Fei", "affiliations": [3], "bold": true, "corresponding": true },
+      { "name": "Zhihui Wang", "affiliations": [2], "bold": true, "corresponding": true },
+      { "name": "Wanli Ouyang", "affiliations": [1, 3], "bold": true }
+    ],
+    "affiliations": [
+      { "id": 1, "name": "Shenzhen Loop Area Institute" },
+      { "id": 2, "name": "Dalian University of Technology" },
+      { "id": 3, "name": "The Chinese University of Hong Kong" },
+      { "id": 4, "name": "The Hong Kong University of Science and Technology" }
+    ],
+    "emails": [
+      "feynben@gmail.com",
+      "zyliumy@gmail.com",
+      "zhwang@dlut.edu.cn"
+    ],
+    "arxiv": "",
+    "github": "https://github.com/Su-ISE-2001/LabOSBench",
+    "paper_pdf": "papers/labosbench.pdf",
+    "abstract": "LabOSBench is a lightweight, executable benchmark built on web-based scientific instrument simulators, covering 8 instrument types and 96 subtasks with both subtask-level and end-to-end evaluation. Results show that current agents can complete many structured GUI subtasks, but still struggle with feedback-driven control and long-horizon workflow execution."
+  },
+  "summary": {
+    "total_tasks": 96,
+    "total_instruments": 8,
+    "human_success_rate": 92.4,
+    "best_agent_success_rate": 81.4,
+    "best_agent_name": "GTA1 w/ GPT-5.5",
+    "best_foundation_rate": 76.3,
+    "best_foundation_name": "Seed-1.6",
+    "best_agentic_rate": 81.4,
+    "best_agentic_name": "GTA1 w/ GPT-5.5",
+    "end_to_end_gpt55": 26.3,
+    "note": "Subtask-level success rate (macro-average over 8 instruments); end-to-end GPT-5.5 average: 26.3%"
+  },
+  "leaderboard": [
+    {
+      "rank": 1,
+      "agent": "Human Expert",
+      "type": "human",
+      "overall": 92.4,
+      "sem": 91.7,
+      "spm": 85.7,
+      "tem": 90.0,
+      "xrd": 100.0,
+      "lfm": 91.7,
+      "fib": 80.0,
+      "apt": 100.0,
+      "eds": 100.0,
+      "highlight": true,
+      "school": null,
+      "organization": null
+    },
+    {
+      "rank": 2,
+      "agent": "GTA1 w/ GPT-5.5",
+      "type": "framework",
+      "overall": 81.4,
+      "sem": 87.5,
+      "spm": 82.1,
+      "tem": 85.0,
+      "xrd": 87.5,
+      "lfm": 70.8,
+      "fib": 67.5,
+      "apt": 83.3,
+      "eds": 87.5,
+      "highlight": true,
+      "school": null,
+      "organization": null
+    },
+    {
+      "rank": 3,
+      "agent": "Seed-1.6",
+      "type": "closed",
+      "overall": 76.3,
+      "sem": 79.2,
+      "spm": 78.6,
+      "tem": 65.0,
+      "xrd": 87.5,
+      "lfm": 66.7,
+      "fib": 65.0,
+      "apt": 87.5,
+      "eds": 81.2,
+      "school": null,
+      "organization": null
+    },
+    {
+      "rank": 4,
+      "agent": "GPT-5.5",
+      "type": "closed",
+      "overall": 72.6,
+      "sem": 83.3,
+      "spm": 78.6,
+      "tem": 50.0,
+      "xrd": 62.5,
+      "lfm": 50.0,
+      "fib": 65.0,
+      "apt": 91.7,
+      "eds": 100.0,
+      "school": null,
+      "organization": null
+    },
+    {
+      "rank": 5,
+      "agent": "UI-TARS-1.5-7B",
+      "type": "open",
+      "overall": 65.9,
+      "sem": 50.0,
+      "spm": 75.0,
+      "tem": 60.0,
+      "xrd": 81.2,
+      "lfm": 54.2,
+      "fib": 65.0,
+      "apt": 66.7,
+      "eds": 75.0,
+      "school": null,
+      "organization": null
+    },
+    {
+      "rank": 6,
+      "agent": "Hippo Agent w/ Opus-4.5",
+      "type": "framework",
+      "overall": 65.8,
+      "sem": 83.3,
+      "spm": 71.4,
+      "tem": 50.0,
+      "xrd": 75.0,
+      "lfm": 58.3,
+      "fib": 30.0,
+      "apt": 58.3,
+      "eds": 100.0,
+      "school": null,
+      "organization": null
+    },
+    {
+      "rank": 7,
+      "agent": "GUI-Owl-7B",
+      "type": "open",
+      "overall": 64.0,
+      "sem": 83.3,
+      "spm": 71.4,
+      "tem": 50.0,
+      "xrd": 75.0,
+      "lfm": 33.3,
+      "fib": 32.5,
+      "apt": 66.7,
+      "eds": 100.0,
+      "school": null,
+      "organization": null
+    },
+    {
+      "rank": 8,
+      "agent": "Claude Sonnet-4.5",
+      "type": "closed",
+      "overall": 62.4,
+      "sem": 83.3,
+      "spm": 71.4,
+      "tem": 40.0,
+      "xrd": 62.5,
+      "lfm": 50.0,
+      "fib": 25.0,
+      "apt": 66.7,
+      "eds": 100.0,
+      "school": null,
+      "organization": null
+    },
+    {
+      "rank": 9,
+      "agent": "Claude Opus-4.5",
+      "type": "closed",
+      "overall": 62.0,
+      "sem": 83.3,
+      "spm": 64.3,
+      "tem": 40.0,
+      "xrd": 75.0,
+      "lfm": 50.0,
+      "fib": 25.0,
+      "apt": 58.3,
+      "eds": 100.0,
+      "school": null,
+      "organization": null
+    },
+    {
+      "rank": 10,
+      "agent": "Qwen3VL-32B",
+      "type": "open",
+      "overall": 61.5,
+      "sem": 83.3,
+      "spm": 64.3,
+      "tem": 50.0,
+      "xrd": 75.0,
+      "lfm": 50.0,
+      "fib": 27.5,
+      "apt": 66.7,
+      "eds": 75.0,
+      "school": null,
+      "organization": null
+    },
+    {
+      "rank": 11,
+      "agent": "EvoCUA-8B",
+      "type": "open",
+      "overall": 59.7,
+      "sem": 83.3,
+      "spm": 57.1,
+      "tem": 50.0,
+      "xrd": 75.0,
+      "lfm": 50.0,
+      "fib": 35.0,
+      "apt": 70.8,
+      "eds": 56.2,
+      "school": null,
+      "organization": null
+    },
+    {
+      "rank": 12,
+      "agent": "Kimi-K2.5",
+      "type": "closed",
+      "overall": 59.7,
+      "sem": 62.5,
+      "spm": 35.7,
+      "tem": 50.0,
+      "xrd": 87.5,
+      "lfm": 66.7,
+      "fib": 52.5,
+      "apt": 66.7,
+      "eds": 56.2,
+      "school": null,
+      "organization": null
+    },
+    {
+      "rank": 13,
+      "agent": "VLAA-GUI w/ Opus-4.5",
+      "type": "framework",
+      "overall": 45.6,
+      "sem": 33.3,
+      "spm": 42.9,
+      "tem": 40.0,
+      "xrd": 62.5,
+      "lfm": 33.3,
+      "fib": 15.0,
+      "apt": 50.0,
+      "eds": 87.5,
+      "school": null,
+      "organization": null
+    }
+  ],
+  "instruments": [
+    {
+      "name": "SEM",
+      "full_name": "Scanning Electron Microscope",
+      "subtasks": 12,
+      "goal": "Imaging",
+      "human_rate": 91.7,
+      "best_agent_rate": 87.5,
+      "best_agent": "GTA1 w/ GPT-5.5"
+    },
+    {
+      "name": "SPM",
+      "full_name": "Scanning Probe Microscopy",
+      "subtasks": 14,
+      "goal": "Scanning",
+      "human_rate": 85.7,
+      "best_agent_rate": 82.1,
+      "best_agent": "GTA1 w/ GPT-5.5"
+    },
+    {
+      "name": "TEM",
+      "full_name": "Transmission Electron Microscope",
+      "subtasks": 10,
+      "goal": "Imaging",
+      "human_rate": 90.0,
+      "best_agent_rate": 85.0,
+      "best_agent": "GTA1 w/ GPT-5.5"
+    },
+    {
+      "name": "XRD",
+      "full_name": "X-Ray Diffraction",
+      "subtasks": 8,
+      "goal": "Diffractogram",
+      "human_rate": 100.0,
+      "best_agent_rate": 87.5,
+      "best_agent": "GTA1 / Kimi-K2.5 / Seed-1.6"
+    },
+    {
+      "name": "LFM",
+      "full_name": "Light/Fluorescence Microscopy",
+      "subtasks": 12,
+      "goal": "Brightfield",
+      "human_rate": 91.7,
+      "best_agent_rate": 70.8,
+      "best_agent": "GTA1 w/ GPT-5.5"
+    },
+    {
+      "name": "FIB",
+      "full_name": "Focused Ion Beam",
+      "subtasks": 20,
+      "goal": "Preparation",
+      "human_rate": 80.0,
+      "best_agent_rate": 67.5,
+      "best_agent": "GTA1 w/ GPT-5.5"
+    },
+    {
+      "name": "APT",
+      "full_name": "Atom Probe Tomography",
+      "subtasks": 12,
+      "goal": "Reconstruction",
+      "human_rate": 100.0,
+      "best_agent_rate": 91.7,
+      "best_agent": "GPT-5.5"
+    },
+    {
+      "name": "EDS",
+      "full_name": "Energy-Dispersive Spectroscopy",
+      "subtasks": 8,
+      "goal": "Spectrum",
+      "human_rate": 100.0,
+      "best_agent_rate": 100.0,
+      "best_agent": "Multiple (100%)"
+    }
+  ],
+  "task_categories": [
+    {
+      "id": "preparation",
+      "name": "Preparation & Sample Handling",
+      "name_en": "Preparation & Sample Handling",
+      "description": "Simulator setup, target selection, sample loading, and other pre-measurement steps",
+      "best_model": "Seed-1.6",
+      "avg_success": 97.1
+    },
+    {
+      "id": "activation",
+      "name": "Activation & Alignment",
+      "name_en": "Activation & Alignment",
+      "description": "Activating instrument components or aligning the system to a valid operating state",
+      "best_model": "GTA1 w/ GPT-5.5",
+      "avg_success": 63.6
+    },
+    {
+      "id": "configuration",
+      "name": "Measurement Configuration",
+      "name_en": "Measurement Configuration",
+      "description": "Parameter setup before acquisition, scanning, machining, or reconstruction",
+      "best_model": "GTA1 w/ GPT-5.5",
+      "avg_success": 87.0
+    },
+    {
+      "id": "execution",
+      "name": "Experimental Execution",
+      "name_en": "Experimental Execution",
+      "description": "Starting, monitoring, or completing the primary scientific operation",
+      "best_model": "GTA1 w/ GPT-5.5",
+      "avg_success": 78.6
+    },
+    {
+      "id": "postprocessing",
+      "name": "Post-processing & Completion",
+      "name_en": "Post-processing & Completion",
+      "description": "Inspection, saving, exporting, reconstruction, or finalizing experiment outputs",
+      "best_model": "Seed-1.6 / UI-TARS",
+      "avg_success": 81.2
+    }
+  ],
+  "category_leaderboard": [
+    {
+      "model": "GTA1 w/ GPT-5.5",
+      "preparation": 94.1,
+      "activation": 63.6,
+      "configuration": 87.0,
+      "execution": 78.6,
+      "postprocessing": 75.0
+    },
+    {
+      "model": "Seed-1.6",
+      "preparation": 97.1,
+      "activation": 59.1,
+      "configuration": 66.7,
+      "execution": 82.1,
+      "postprocessing": 81.2
+    },
+    {
+      "model": "GPT-5.5",
+      "preparation": 82.4,
+      "activation": 50.0,
+      "configuration": 81.5,
+      "execution": 71.4,
+      "postprocessing": 75.0
+    },
+    {
+      "model": "UI-TARS-1.5-7B",
+      "preparation": 91.2,
+      "activation": 40.9,
+      "configuration": 64.8,
+      "execution": 64.3,
+      "postprocessing": 71.9
+    },
+    {
+      "model": "Qwen3VL-32B",
+      "preparation": 82.4,
+      "activation": 38.6,
+      "configuration": 61.1,
+      "execution": 46.4,
+      "postprocessing": 62.5
+    },
+    {
+      "model": "VLAA-GUI w/ Opus-4.5",
+      "preparation": 82.4,
+      "activation": 18.2,
+      "configuration": 29.6,
+      "execution": 28.6,
+      "postprocessing": 56.2
+    }
+  ],
+  "end_to_end": {
+    "model": "GPT-5.5",
+    "runs_per_workflow": 10,
+    "average_success": 26.3,
+    "by_instrument": [
+      {
+        "instrument": "EDS",
+        "success_rate": 70.0
+      },
+      {
+        "instrument": "APT",
+        "success_rate": 80.0
+      },
+      {
+        "instrument": "XRD",
+        "success_rate": 60.0
+      },
+      {
+        "instrument": "SEM",
+        "success_rate": 0.0
+      },
+      {
+        "instrument": "SPM",
+        "success_rate": 0.0
+      },
+      {
+        "instrument": "TEM",
+        "success_rate": 0.0
+      },
+      {
+        "instrument": "LFM",
+        "success_rate": 0.0
+      },
+      {
+        "instrument": "FIB",
+        "success_rate": 0.0
+      }
+    ],
+    "note": "Error accumulation is severe in end-to-end evaluation, far below subtask-level performance"
+  },
+  "error_analysis": [
+    {
+      "category": "Visual grounding failures",
+      "description": "Failure to locate controls, buttons, or target regions in instrument software (widget grounding)"
+    },
+    {
+      "category": "Limited scientific state understanding",
+      "description": "Alignment, focus, and image-adjustment tasks require interpreting scientific visual state and closed-loop control"
+    },
+    {
+      "category": "Long-horizon planning & error accumulation",
+      "description": "Multi-step workflows fail on ordering, state memory, or recovery (end-to-end success only 26.3%)"
+    },
+    {
+      "category": "Domain-specific instrument GUIs",
+      "description": "General GUI grounding is insufficient for instrument-specific widgets (sliders, heatmaps, multi-state indicators, etc.)"
+    }
+  ],
+  "comparison_with_osworld": {
+    "osworld_rate": 72.36,
+    "labosbench_best_subtask": 81.4,
+    "labosbench_end_to_end": 26.3,
+    "note": "Best subtask agent (GTA1) reaches 81.4%, but GPT-5.5 end-to-end is only 26.3%, reflecting error accumulation in long scientific workflows"
+  },
+  "findings": [
+    "Subtask-level evaluation reveals local GUI-agent limits; end-to-end evaluation exposes severe error accumulation",
+    "General multimodal models outperform specialized GUI models overall, but still struggle on feedback-heavy and long-horizon tasks",
+    "Agentic frameworks (e.g. GTA1) help only when recovery strategies align with instrument-operation semantics",
+    "LabOSBench jointly stresses GUI grounding, scientific state understanding, sequential control, and continuous visual adjustment"
+  ]
+}

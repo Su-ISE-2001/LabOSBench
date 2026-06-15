@@ -1,0 +1,336 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GUIAgentXRDTaskEpisode",
+  "description": "Log format for a single GUIAgent episode on the XRD simulator task.",
+  "type": "object",
+  "required": [
+    "task_id",
+    "episode_id",
+    "env",
+    "success",
+    "summary",
+    "grounding_metrics",
+    "subtasks",
+    "steps"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "description": "Task identifier, e.g. 'XRD-Scan-And-Save-01'."
+    },
+    "episode_id": {
+      "type": "string",
+      "description": "Unique id for this run/episode."
+    },
+    "env": {
+      "type": "string",
+      "description": "Environment name, e.g. 'XRD_Simulator'."
+    },
+    "agent_name": {
+      "type": "string",
+      "description": "Optional. Name or version of the agent.",
+      "nullable": true
+    },
+    "success": {
+      "type": "boolean",
+      "description": "Whether the overall task is successfully completed (all subtasks S1–S8)."
+    },
+    "timestamps": {
+      "type": "object",
+      "description": "Timing information for this episode.",
+      "properties": {
+        "start_time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Episode start time."
+        },
+        "end_time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Episode end time."
+        },
+        "duration_sec": {
+          "type": "number",
+          "description": "Total wall-clock time in seconds."
+        }
+      },
+      "required": ["duration_sec"],
+      "additionalProperties": false
+    },
+    "summary": {
+      "type": "object",
+      "description": "High-level task metrics for this episode.",
+      "required": [
+        "optimal_steps",
+        "actual_steps",
+        "step_efficiency"
+      ],
+      "properties": {
+        "optimal_steps": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Minimal step count in an ideal human-designed policy (N_opt)."
+        },
+        "actual_steps": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of actions actually taken by the agent (N_agent)."
+        },
+        "step_efficiency": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Step efficiency, e.g. optimal_steps / max(actual_steps, 1)."
+        }
+      },
+      "additionalProperties": false
+    },
+    "grounding_metrics": {
+      "type": "object",
+      "description": "Grounding-related metrics aggregated over the episode.",
+      "required": [
+        "widget_grounding_accuracy",
+        "text_grounding_accuracy",
+        "state_grounding_accuracy"
+      ],
+      "properties": {
+        "widget_grounding_accuracy": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "G1: correct control hits / total control-targeted actions."
+        },
+        "text_grounding_accuracy": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "G2: correct text-based choices / total text-based decisions."
+        },
+        "state_grounding_accuracy": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "G3: correct state/stage judgements / total state-sensitive checks."
+        }
+      },
+      "additionalProperties": false
+    },
+    "subtasks": {
+      "type": "array",
+      "description": "Subtask-level metrics for S1–S8.",
+      "items": {
+        "type": "object",
+        "required": [
+          "subtask_id",
+          "name",
+          "success",
+          "attempts"
+        ],
+        "properties": {
+          "subtask_id": {
+            "type": "string",
+            "description": "Subtask identifier such as 'S1', 'S2', ..., 'S8'."
+          },
+          "name": {
+            "type": "string",
+            "description": "Human-readable subtask name."
+          },
+          "success": {
+            "type": "boolean",
+            "description": "Whether this subtask succeeded in this episode."
+          },
+          "attempts": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "How many distinct attempts / retries were made in this subtask."
+          },
+          "notes": {
+            "type": "string",
+            "description": "Optional diagnostic note."
+          },
+          "phase": {
+            "type": "string",
+            "description": "High-level workflow phase this subtask belongs to."
+          },
+          "grounding_focus": {
+            "type": "array",
+            "description": "Grounding capabilities mainly stressed by this subtask.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "success_criteria": {
+            "type": "string",
+            "description": "Human-readable success criterion for this subtask."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "steps": {
+      "type": "array",
+      "description": "Fine-grained action log for the episode.",
+      "items": {
+        "type": "object",
+        "required": [
+          "index",
+          "timestamp_offset_sec",
+          "subtask_id",
+          "action_type",
+          "target",
+          "hit_expected_target",
+          "relies_on_text",
+          "state_snapshot"
+        ],
+        "properties": {
+          "index": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Step index starting from 0."
+          },
+          "timestamp_offset_sec": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Time offset from episode start, in seconds."
+          },
+          "subtask_id": {
+            "type": "string",
+            "description": "Which subtask this step belongs to (e.g. 'S3')."
+          },
+          "action_type": {
+            "type": "string",
+            "enum": ["click", "select", "input", "wait", "custom"],
+            "description": "High-level action type."
+          },
+          "target": {
+            "type": "object",
+            "description": "Target information for this action.",
+            "properties": {
+              "dom_selector": {
+                "type": "string",
+                "description": "CSS selector or XPath of the intended target.",
+                "nullable": true
+              },
+              "bbox": {
+                "type": "array",
+                "description": "[x, y, width, height] in screen coordinates (optional).",
+                "items": { "type": "number" },
+                "minItems": 4,
+                "maxItems": 4
+              },
+              "text": {
+                "type": "string",
+                "description": "Displayed text on the intended target (if any).",
+                "nullable": true
+              }
+            },
+            "additionalProperties": false
+          },
+          "hit_expected_target": {
+            "type": "boolean",
+            "description": "Whether the actually clicked widget matches the expected one."
+          },
+          "relies_on_text": {
+            "type": "boolean",
+            "description": "Whether this decision relies on reading / interpreting on-screen text."
+          },
+          "chosen_text": {
+            "type": "string",
+            "description": "The text the agent claims to have used for grounding, if any.",
+            "nullable": true
+          },
+          "state_snapshot": {
+            "type": "object",
+            "description": "Key environment state features observed at this step (XRD-specific).",
+            "properties": {
+              "doors_open": {
+                "type": "boolean",
+                "description": "Whether XRD doors are open.",
+                "nullable": true
+              },
+              "standby_on": {
+                "type": "boolean",
+                "description": "Whether standby / x-ray is on.",
+                "nullable": true
+              },
+              "specimen_selected": {
+                "type": "boolean",
+                "description": "Whether a valid specimen has been selected.",
+                "nullable": true
+              },
+              "power_ready": {
+                "type": "boolean",
+                "description": "Whether power has reached the required levels.",
+                "nullable": true
+              },
+              "start_angle": {
+                "type": "number",
+                "description": "Current start angle value.",
+                "nullable": true
+              },
+              "end_angle": {
+                "type": "number",
+                "description": "Current end angle value.",
+                "nullable": true
+              },
+              "step_val": {
+                "type": "number",
+                "description": "Current step size value.",
+                "nullable": true
+              },
+              "steptime_val": {
+                "type": "number",
+                "description": "Current scan rate value.",
+                "nullable": true
+              },
+              "scanning": {
+                "type": "boolean",
+                "description": "Whether scanning is in progress.",
+                "nullable": true
+              },
+              "angle_range_valid": {
+                "type": "boolean",
+                "description": "Whether the current angle range is legal for scanning.",
+                "nullable": true
+              },
+              "step_configured": {
+                "type": "boolean",
+                "description": "Whether a legal step size has been selected.",
+                "nullable": true
+              },
+              "scan_rate_configured": {
+                "type": "boolean",
+                "description": "Whether a legal scan rate has been selected.",
+                "nullable": true
+              },
+              "scan_ready": {
+                "type": "boolean",
+                "description": "Whether the start-scan control is currently enabled.",
+                "nullable": true
+              },
+              "save_enabled": {
+                "type": "boolean",
+                "description": "Whether the save-result control is currently enabled.",
+                "nullable": true
+              }
+            },
+            "additionalProperties": true
+          },
+          "reward": {
+            "type": "number",
+            "description": "Optional scalar reward for RL-style training.",
+            "nullable": true
+          },
+          "agent_comment": {
+            "type": "string",
+            "description": "Optional natural language reasoning / explanation.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
+
+

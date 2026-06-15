@@ -1,0 +1,27 @@
+description: "Lite tool config for os_symphony web smoke tests"
+
+tools:
+  click:
+    enabled: true
+  type:
+    enabled: true
+  scroll:
+    enabled: true
+  drag_and_drop:
+    enabled: true
+  highlight_text_span:
+    enabled: true
+  locate_cursor:
+    enabled: true
+  hotkey:
+    enabled: true
+  hold_and_press:
+    enabled: true
+  wait:
+    enabled: true
+  done:
+    enabled: true
+  fail:
+    enabled: true
+  open:
+    enabled: true

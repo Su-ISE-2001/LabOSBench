@@ -1,0 +1,41 @@
+/*@import url('https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro');*/
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Source+Sans+Pro:700');
+
+
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, 
+p, blockquote, pre, a, abbr, address, cite, code, del, dfn, em, 
+img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, hr, 
+dl, dt, dd, ol, ul, li, fieldset, form, label, legend, 
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figure, figcaption, hgroup, 
+menu, footer, header, nav, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+    vertical-align: baseline;
+}
+
+article, aside, canvas, figure, figure img, figcaption, hgroup,
+footer, header, nav, section, audio, video, li img {
+	display: block;
+}
+
+a img {border: 0;}
+
+a{text-decoration: none;}
+
+ol, ul {
+	list-style: none;
+}
+
+body, button {
+/*font-family: 'Source Sans Pro', sans-serif;*/
+font-family: 'Open Sans', sans-serif;}
+
+input:focus,
+main:focus,
+button:focus {outline:0;}
+
+li {
+	list-style-type:none;
+}

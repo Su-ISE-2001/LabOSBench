@@ -1,0 +1,582 @@
+<!doctype html>
+<!-- 
+Created  by Andres Vasquez for AMMRF'S https://www.myscope.training
+info@andresvasquez.net  —— https://www.andresvasquez.net ——
+copyright:This work is licensed under a Creative Commons Attribution 4.0 International License.
+-->
+<!--< >-->
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>FIB Simulator</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/FIB_simulator.css">
+    <link rel="stylesheet" href="css/custom-dd-jquery-ui.css">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <!-- FIB benchmark logger：用于记录 GUIAgent 在 FIB 任务中的行为与指标 -->
+    <script src="/static/benchmark_fib.js"></script>
+</head>
+
+<body>
+    <div id="top-bar" class="flex-evenly modal-is-open">
+        <div class="flex" id="top-bar-left">
+            <a id="myscope-logo" href="http://localhost" title="Start Page"></a>
+        </div>
+        <div id="top-instructions" class="-top-instructions-on totally-hidden">
+            <p id="top-instructions-txt"></p>
+        </div>
+    </div>
+    <div id="simulator-base" class="flex modal-is-open">
+        <div id="controls-left">
+            <div id="lefttop-div" class="flex-between">
+                <div id="vent-div" class="flex div-disabled">
+                    <button tabindex="0" type="button" id="vent-btn" class="controls-btn" disabled></button>
+                    <p class="btn-label">VENT</p>
+                </div>
+                <div id="pump-div" class="flex div-disabled">
+                    <button tabindex="0" type="button" id="pump-btn" class="controls-btn" disabled></button>
+                    <p class="btn-label">PUMP</p>
+                </div>
+            </div>
+
+            <div class="flex-between">
+                <fieldset id="fieldset-l">
+                    <label id="sample-label" class="label-disabled">SAMPLE</label>
+                    <select id="sample">
+                        <option value="0" selected="selected" disabled></option>
+                        <option value="a" disabled>Al Stub</option>
+                        <option value="b">Si Wafer</option>
+                    </select>
+                </fieldset>
+                <div id="empty-div-sample"></div>
+            </div>
+            <div id="third-div-lefttop" class="flex-between top-controls-set">
+                <fieldset id="fieldset-a">
+
+                    <div id="ht-div" class="flex div-disabled">
+                        <button tabindex="0" type="button" id="ht-btn" class="controls-btn" disabled></button>
+                        <p class="btn-label">HT</p>
+                    </div>
+                    <div id="snap-left-div" class="flex div-disabled">
+                        <button tabindex="0" type="button" id="snap-left-btn" class="controls-btn" disabled></button>
+                        <p class="btn-label">SNAPSHOT</p>
+                    </div>
+                    <label id="acc-volt-left-label" class="label-disabled">ACC VOLTAGE</label>
+                    <select id="acc-volt-left">
+                        <option value="0" selected="selected" disabled></option>
+                        <option value="a" disabled>2Kv</option>
+                        <option value="b">5Kv</option>
+                        <option value="c" disabled>10Kv</option>
+                        <option value="d" disabled>30Kv</option>
+                    </select>
+                    <label id="beam-current-left-label" class="label-disabled">BEAM CURRENT</label>
+                    <select id="beam-current-left">
+                        <option value="0" selected="selected"></option>
+                        <option value="a">0.1nA</option>
+                        <option value="b" disabled>0.8nA</option>
+                        <option value="c" disabled>1.6nA</option>
+                        <option value="d" disabled>3.2nA</option>
+                    </select>
+                </fieldset>
+                <fieldset id="fieldset-b">
+                    <div id="live-left-div" class="flex div-disabled">
+                        <button tabindex="0" type="button" id="live-left-btn" class="controls-btn" disabled></button>
+                        <div>
+                            <p class="btn-label">LIVE VIEW</p>
+                        </div>
+                    </div>
+                    <div id="capture-left-div" class="flex div-disabled">
+                        <button tabindex="0" type="button" id="capture-left-btn" class="controls-btn" disabled></button>
+                        <p class="btn-label">CAPTURE</p>
+                    </div>
+                    <label id="magnification-label" class="label-disabled">MAGNIFICATION</label>
+                    <select id="magnification">
+                        <option value="0" selected="selected" disabled></option>
+                        <option value="a">500x</option>
+                        <option value="b" disabled>1000x</option>
+                        <option value="c" disabled>3000x</option>
+                        <option value="d" disabled>5000x</option>
+                        <option value="e" disabled>10000x</option>
+                        <option value="f" disabled>50000x</option>
+                    </select>
+                </fieldset>
+            </div>
+            <div id="three-btns-leftdown" class="flex-between">
+            </div>
+
+            <p id="focus-left-label" class="slider-label label-disabled">FOCUS</p>
+            <div id="focus-left-div" class="slider-div flex div-disabled">
+                <p class="axis-tile">&nbsp;&nbsp;&nbsp;</p>
+                <div id="focus-left" class="tab-slider"></div>
+                <p class="axis-tile">&nbsp;&nbsp;&nbsp;</p>
+            </div>
+
+            <div id="stat-btns-leftmid" class="flex-between">
+                <div id="wd-div" class="stats flex-evenly div-disabled">
+                    <div class="stats-name">
+                        <p class="stat-title">WD</p>
+                    </div>
+                    <div class="stats-value">
+                        <p id="wd-val" class="stat-title">--</p>
+                    </div>
+                    <select id="wd-dropdown">
+                        <option value="0" selected="selected" disabled></option>
+                        <option value="a" disabled>2mm</option>
+                        <option value="b" disabled>3mm</option>
+                        <option value="c" disabled>4mm</option>
+                        <option value="d" disabled>5mm</option>
+                        <option value="e" disabled>6mm</option>
+                        <option value="f">7mm</option>
+                    </select>
+                </div>
+                <div id="autobright-left-div" class="double-label-div flex div-disabled">
+                    <button tabindex="0" type="button" id="autobright-left-btn" class="controls-btn" disabled></button>
+                    <div>
+                        <p class="btn-label long-label">AUTO BRIGHTNESS</p>
+                        <p class="btn-label long-label">&amp; CONTRAST</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="image-tilt-div">
+                <p id="img-tilt-label" class="label-disabled">IMAGE TILT CORRECTION</p>
+                <div id="topleft-checkboxes" class="flex-between long-label">
+                    <form id="surface-form" class="checkbox-disabled">
+                        <input type="checkbox" id="surface" onclick="surface_fn()" disabled> SURFACE</form>
+                    <form id="cross-section-form" class="checkbox-disabled">
+                        <input type="checkbox" id="cross-section" onclick="cross_fn()" disabled> CROSS SECTION</form>
+                </div>
+                <div class="flex-between long-label">
+                    <form id="dynamic-focus-form" class="checkbox-disabled">
+                        <input type="checkbox" id="dynamic-focus" onclick="console_log()" disabled> DYNAMIC FOCUS </form>
+                    <form id="tilt-correction-form" class="checkbox-disabled">
+                        <input type="checkbox" id="tilt-correction" onclick="console_log()" disabled> TILT CORRECTION</form>
+                </div>
+            </div>
+            <div id="two-btns-leftdown" class="flex-between long-label">
+                <div id="centerstage-div" class="flex div-disabled">
+                    <button tabindex="0" type="button" id="centerstage-btn" class="controls-btn" disabled></button>
+                    <p class="btn-label">CENTRE STAGE</p>
+                </div>
+                <div id="centerfeature-div" class="flex div-disabled">
+                    <button tabindex="0" type="button" id="centerfeature-btn" class="controls-btn" disabled></button>
+                    <p class="btn-label">CENTRE FEATURE</p>
+                </div>
+            </div>
+            <div id="topleft-stats" class="left-stats flex">
+                <div class="stats-div">
+                    <div id="ebeam-x" class="stats flex-evenly div-disabled">
+                        <div class="stats-name">
+                            <p class="stat-title">X</p>
+                        </div>
+                        <div class="stats-value">
+                            <p id="ebeam-x-val" class="stat-title">0.000mm</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="stats-div">
+                    <div id="ebeam-y" class="stats flex-evenly div-disabled">
+                        <div class="stats-name">
+                            <p class="stat-title">Y</p>
+                        </div>
+                        <div class="stats-value">
+                            <p id="ebeam-y-val" class="stat-title">0.000mm</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="stats-div">
+                    <div id="ebeam-z" class="stats flex-evenly div-disabled">
+                        <div class="stats-name">
+                            <p class="stat-title">Z</p>
+                        </div>
+                        <div class="stats-value">
+                            <p id="ebeam-z-val" class="stat-title">0.000mm</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="right-stats-bottom" class="left-stats flex">
+                <div class="stats-div">
+                    <div id="ebeam-r" class="stats flex-evenly div-disabled">
+                        <div class="stats-name">
+                            <p class="stat-title">ROTATION</p>
+                        </div>
+                        <div class="stats-value">
+                            <p id="ebeam-r-val" class="stat-title">0.0&deg;</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="stats-div">
+                    <div id="t-div" class="stats flex-evenly div-disabled">
+                        <div class="stats-name">
+                            <p class="stat-title">TILT</p>
+                        </div>
+                        <div class="stats-value">
+                            <p id="ebeam-t-val" class="stat-title">0&deg;</p>
+                        </div>
+                        <select id="t-dropdown">
+                            <option value="0" selected="selected" disabled></option>
+                            <option value="a" disabled>0.0&deg;</option>
+                            <option value="b">10&deg;</option>
+                            <option value="c" disabled>52&deg;</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <p id="stage-z-label" class="slider-label label-disabled">STAGE Z</p>
+            <div id="stage-z-div" class="slider-div flex div-disabled">
+                <button id="stage-z-down" class="spinn-btn spinn-down btn-disabled" disabled></button>
+                <div id="stage-z" class="tab-slider"></div>
+                <button id="stage-z-up" class="spinn-btn spinn-up btn-disabled" disabled></button>
+            </div>
+        </div>
+        <div id="channels-left">
+            <img id="centerpoint-left" src="images/simulator/FIB/sequences/patterns_svg/centerpoint.svg" class="center-img totally-hidden">
+            <img id="sample-mark-si" src="images/simulator/FIB/sequences/patterns_svg/si_pos.svg" class="center-img totally-hidden">
+            <img id="sample-mark-al" src="images/simulator/FIB/sequences/patterns_svg/al_pos.svg" class="center-img totally-hidden">
+            <svg id="svg-hotspot" viewBox="0 0 1280 859" version="1.1" xmlns="http://www.w3.org/2000/svg" class="center-img">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <rect id="hotspot-si" fill="#FFF42F" x="665" y="300" width="65" height="65" onclick="centreFtr_fun('si')" class="totally-hidden"></rect>
+                    <rect id="hotspot-al" fill="#FFF42F" x="334" y="427" width="52" height="52" onclick="centreFtr_fun('al')" class="totally-hidden"></rect>
+                </g>
+            </svg>
+            <span id="label-ch1" class="monitor-label">e beam view</span>
+            <span id="label-ch3" class="monitor-label">navigation photo</span>
+            <div id="pause-ch1" class="div-pause"></div>
+            <div id="pause-ch3" class="div-pause"></div>
+            <canvas id="ch1-canvas" class="micrograph-canvas canvas-top"></canvas>
+            <div id="scalebar-div-ch1" class="info-bar flex">
+                <div id="scalebar-ch1" class="scale-ch1 scalebar totally-hidden"></div>
+                <p id="scale-unit-ch1" class="scale-ch1 scale-unit totally-hidden">20µm</p>
+            </div>
+            <canvas id="ch3-canvas" class="micrograph-canvas"></canvas>
+        </div>
+        <div id="channels-right">
+            <img id="centerpoint-right" src="images/simulator/FIB/sequences/patterns_svg/centerpoint.svg" class="center-img totally-hidden">
+            <svg id='svg-dd-1' viewBox='0 0 1280 859' class='center-img totally-hidden'>
+                <path d="M121,124 L281,124 L281,284 L121,284 L121,124 Z" id="drop1" stroke="#256FFF" stroke-width="8" fill-opacity="0" fill="#FF0000" stroke-dasharray="10,9"></path>
+                <g id="drag1" transform="translate(560.000000, 410.000000)">
+                    <path d="M155.5,2.5 L155.5,155.5 L2.5,155.5 L2.5,2.5 L155.5,2.5 Z" stroke="#F3F302" stroke-width="3" fill-opacity="0" fill="#FF0000"></path>
+                    <path d="M1,1 L157,1 L157,157 L1,157 L1,1 Z M1.77841268,149.031391 L10.5519929,155.936632 M1.77841268,141.982277 L17.5436942,155.936632 M1.77841268,134.933164 L24.5353955,155.936632 M1.77841268,127.88405 L31.5270968,155.936632 M1.77841268,120.834936 L38.5187981,155.936632 M1.77841268,113.785822 L45.5104994,155.936632 M1.77841268,106.736708 L52.5022007,155.936632 M1.77841268,99.6875942 L59.493902,155.936632 M1.77841268,92.6384803 L66.4856033,155.936632 M1.77841268,85.5893665 L73.4773046,155.936632 M1.77841268,78.5402526 L80.469006,155.936632 M1.77841268,71.4911387 L87.4607073,155.936632 M1.77841268,64.4420248 L94.4524086,155.936632 M1.77841268,57.392911 L101.44411,155.936632 M1.77841268,50.3437971 L108.435811,155.936632 M1.77841268,43.2946832 L115.427512,155.936632 M1.77841268,36.2455694 L122.419214,155.936632 M1.77841268,29.1964555 L129.410915,155.936632 M1.77841268,22.1473416 L136.402616,155.936632 M1.77841268,15.0982277 L143.394318,155.936632 M1.77841268,8.04911387 L150.386019,155.936632 M1.77841268,1 L155.736072,154.5 M8.76164523,1 L155.736072,147.592385 M15.7448778,1 L155.736072,140.684769 M22.7281103,1 L155.736072,133.777154 M29.7113429,1 L155.736072,126.869539 M36.6945754,1 L155.736072,119.961923 M43.677808,1 L155.736072,113.054308 M50.6610405,1 L155.736072,106.146693 M57.6442731,1 L155.736072,99.2390773 M64.6275056,1 L155.736072,92.3314619 M71.6107382,1 L155.736072,85.4238466 M78.5939707,1 L155.736072,78.5162312 M85.5772033,1 L155.736072,71.6086159 M92.5604358,1 L155.736072,64.7010005 M99.5436684,1 L155.736072,57.7933852 M106.526901,1 L155.736072,50.8857699 M113.510133,1 L155.736072,43.9781545 M120.493366,1 L155.736072,37.0705392 M127.476599,1 L155.736072,30.1629238 M134.459831,1 L155.736072,23.2553085 M141.443064,1 L155.736072,16.3476931 M148.426296,1 L155.736072,9.4400778" stroke="#F3F302" fill-opacity="0" fill="#FF0000"></path>
+                    <line x1="79" y1="77" x2="79" y2="82" stroke="#F3F302" fill="#F3F302" stroke-linecap="square" transform="translate(79.000000, 79.500000) rotate(90.000000) translate(-79.000000, -79.500000) "></line>
+                    <line x1="79" y1="77" x2="79" y2="82" stroke="#F3F302" fill="#F3F302" stroke-linecap="square"></line>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="0" y="153" width="7" height="7"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="77" y="0" width="7" height="7"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="153" y="153" width="7" height="7"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="153" y="77" width="7" height="7"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="153" y="0" width="7" height="7"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="77" y="153" width="7" height="7"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="0" y="77" width="7" height="7"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="0" y="0" width="7" height="7"></rect>
+                </g>
+            </svg>
+            <svg id='svg-dd-2' viewBox='0 0 1280 859' class='center-img totally-hidden'>
+                <path d="M1010,159 L1170,159 L1170,319 L1010,319 L1010,159 Z" id="drop2" stroke="#256FFF" stroke-width="8" fill-opacity="0" fill="#FF0000" stroke-dasharray="10,9"></path>
+                <g id="drag2" transform="translate(560.000000, 410.000000)">
+                    <path d="M155.5,2.5 L155.5,155.5 L2.5,155.5 L2.5,2.5 L155.5,2.5 Z" stroke="#F3F302" stroke-width="3" fill-opacity="0" fill="#FF0000"></path>
+                    <path d="M1,1 L157,1 L157,157 L1,157 L1,1 Z M1.77841268,149.031391 L10.5519929,155.936632 M1.77841268,141.982277 L17.5436942,155.936632 M1.77841268,134.933164 L24.5353955,155.936632 M1.77841268,127.88405 L31.5270968,155.936632 M1.77841268,120.834936 L38.5187981,155.936632 M1.77841268,113.785822 L45.5104994,155.936632 M1.77841268,106.736708 L52.5022007,155.936632 M1.77841268,99.6875942 L59.493902,155.936632 M1.77841268,92.6384803 L66.4856033,155.936632 M1.77841268,85.5893665 L73.4773046,155.936632 M1.77841268,78.5402526 L80.469006,155.936632 M1.77841268,71.4911387 L87.4607073,155.936632 M1.77841268,64.4420248 L94.4524086,155.936632 M1.77841268,57.392911 L101.44411,155.936632 M1.77841268,50.3437971 L108.435811,155.936632 M1.77841268,43.2946832 L115.427512,155.936632 M1.77841268,36.2455694 L122.419214,155.936632 M1.77841268,29.1964555 L129.410915,155.936632 M1.77841268,22.1473416 L136.402616,155.936632 M1.77841268,15.0982277 L143.394318,155.936632 M1.77841268,8.04911387 L150.386019,155.936632 M1.77841268,1 L155.736072,154.5 M8.76164523,1 L155.736072,147.592385 M15.7448778,1 L155.736072,140.684769 M22.7281103,1 L155.736072,133.777154 M29.7113429,1 L155.736072,126.869539 M36.6945754,1 L155.736072,119.961923 M43.677808,1 L155.736072,113.054308 M50.6610405,1 L155.736072,106.146693 M57.6442731,1 L155.736072,99.2390773 M64.6275056,1 L155.736072,92.3314619 M71.6107382,1 L155.736072,85.4238466 M78.5939707,1 L155.736072,78.5162312 M85.5772033,1 L155.736072,71.6086159 M92.5604358,1 L155.736072,64.7010005 M99.5436684,1 L155.736072,57.7933852 M106.526901,1 L155.736072,50.8857699 M113.510133,1 L155.736072,43.9781545 M120.493366,1 L155.736072,37.0705392 M127.476599,1 L155.736072,30.1629238 M134.459831,1 L155.736072,23.2553085 M141.443064,1 L155.736072,16.3476931 M148.426296,1 L155.736072,9.4400778" stroke="#F3F302" fill-opacity="0" fill="#FF0000"></path>
+                    <line x1="79" y1="77" x2="79" y2="82" stroke="#F3F302" fill="#F3F302" stroke-linecap="square" transform="translate(79.000000, 79.500000) rotate(90.000000) translate(-79.000000, -79.500000) "></line>
+                    <line x1="79" y1="77" x2="79" y2="82" stroke="#F3F302" fill="#F3F302" stroke-linecap="square"></line>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="0" y="153" width="7" height="7"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="77" y="0" width="7" height="7"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="153" y="153" width="7" height="7"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="153" y="77" width="7" height="7"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="153" y="0" width="7" height="7"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="77" y="153" width="7" height="7"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="0" y="77" width="7" height="7"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="0" y="0" width="7" height="7"></rect>
+                </g>
+            </svg>
+            <svg id='svg-dd-3' viewBox='0 0 1280 859' class='center-img totally-hidden'>
+                <path d="M456,485 L618,485 L618,552 L456,552 L456,485 Z" id="drop3" stroke="#256FFF" stroke-width="8" fill-opacity="0" fill="#FF0000" stroke-dasharray="10,9"></path>
+                <g id="drag3" transform="translate(559.000000, 280.000000)" stroke="#19FF00">
+                    <line x1="0" y1="2.39285714" x2="162" y2="2.39285714" stroke-width="6"></line>
+                    <rect stroke-width="4" fill-opacity="0" fill="#FF0000" x="2.025" y="2.39285714" width="157.95" height="62.2142857"></rect>
+                    <path d="M2.025,2.39285714 L159.975,2.39285714 L159.975,64.6071429 L2.025,64.6071429 L2.025,2.39285714 Z M1.80064284,59.0363287 L7.33615791,65.5121259 M1.80064284,50.6025674 L14.4547921,65.4229307 M1.80064284,42.1688062 L21.7704751,65.580545 M1.80064284,33.735045 L29.1646115,65.8438283 M1.80064284,25.3012837 L36.0473833,65.5182389 M1.80064284,16.8675225 L43.5183011,65.8928753 M1.80064284,8.43376124 L50.7825226,66.0331231 M1.80064284,2.6598406e-12 L57.5681818,65.7022594 M8.8711658,2.25483124e-12 L64.6362559,65.7239698 M15.9416888,2.18377697e-12 L71.9999585,66.096699 M23.0122117,2.25483124e-12 L78.7620193,65.7628817 M30.0827347,2.11982812e-12 L85.8023696,65.7604649 M37.1532576,2.18377697e-12 L93.1382221,66.1108515 M44.2237806,2.25483124e-12 L99.9483532,65.8450542 M51.2943035,2.25483124e-12 L106.938903,65.7977214 M58.3648265,2.25483124e-12 L113.959742,65.7928036 M65.4353494,2.18377697e-12 L121.176578,66.0282025 M72.5058724,2.31878009e-12 L127.935719,65.7315325 M79.5763954,2.25483124e-12 L135.013184,65.8250196 M86.6469183,2.38983436e-12 L141.870061,65.6731711 M93.7174413,2.31878009e-12 L148.713188,65.5265766 M100.787964,2.31878009e-12 L155.856489,65.7681061 M107.858487,2.25127853e-12 L157.682773,59.6847604 M114.92901,2.3223328e-12 L157.682773,51.420292 M121.999533,2.18377697e-12 L157.682773,43.1558237 M129.070056,2.3223328e-12 L157.682773,34.8913553 M136.140579,2.38805801e-12 L157.682773,26.6268869 M143.211102,2.32055645e-12 L157.682773,18.3624186 M150.281625,2.59322722e-12 L157.682773,10.0979502" fill-opacity="0" fill="#FF0000"></path>
+                </g>
+            </svg>
+            <svg id='svg-dd-4' viewBox='0 0 1280 859' class='center-img totally-hidden'>
+                <path d='M435,503 L685,503 L685,701 L435,701 L435,503 Z' id='drop4' stroke='#256FFF' stroke-width='8' fill-opacity='0' fill='#FF0000' stroke-dasharray='10,9'></path>
+                <g id='drag4' transform='translate(515.000000, 199.000000)' stroke='#FFFF00'>
+                    <rect stroke-width='4' fill-opacity='0' fill='#FD0A0A' x='1.54461538' y='4.1443299' width='247.910769' height='192.71134'></rect>
+                    <line x1='2.31692308' y1='5.18041237' x2='248.683077' y2='5.18041237' stroke-width='6' fill='#FFFF00' stroke-linecap='square'></line>
+                    <line x1='1.15846154' y1='100.5' x2='249.841538' y2='100.5' stroke-width='4' fill='#FFFF00' stroke-linecap='square'></line>
+                    <line x1='125.5' y1='3.10824742' x2='125.5' y2='197.891753' stroke-width='4' fill='#FFFF00' stroke-linecap='square'></line>
+                </g>
+            </svg>
+            <svg id='svg-dd-5' viewBox='0 0 1280 859' class='center-img totally-hidden'>
+                <path d='M434,503 L688,503 L688,513 L434,513 L434,503 Z' id='drop5' stroke='#256FFF' stroke-width='8' fill-opacity='0' fill='#FF0000' stroke-dasharray='10,9'></path>
+                <g id='drag5' transform='translate(513.000000, 425.000000)' stroke='#FFFF00'>
+                    <rect stroke-width='4' fill-opacity='0' fill='#FD0A0A' x='0' y='0' width='254' height='10'></rect>
+                    <line x1='0.772036474' y1='0.181184669' x2='252.455927' y2='9.87456446' stroke-width='2' fill='#FFFF00' stroke-linecap='square'></line>
+                    <line x1='0.772036474' y1='9.87456446' x2='252.130763' y2='0.192935894' stroke-width='2' fill='#FFFF00' stroke-linecap='square'></line>
+                </g>
+            </svg>
+            <svg id='svg-dd-6' viewBox='0 0 1280 859' class='center-img totally-hidden'>
+                <path d="M230,122 L395,122 L395,287 L230,287 L230,122 Z" id="drop6" stroke="#256FFF" stroke-width="8" fill-opacity="0" fill="#FF0000" stroke-dasharray="10,9"></path>
+                <g id="drag6" transform="translate(558.000000, 397.000000)">
+                    <path d="M160.40625,2.53125 L160.40625,160.40625 L2.53125,160.40625 L2.53125,2.53125 L160.40625,2.53125 Z" stroke="#F3F302" stroke-width="3" fill-opacity="0" fill="#FF0000"></path>
+                    <path d="M1.03125,1.03125 L161.90625,1.03125 L161.90625,161.90625 L1.03125,161.90625 L1.03125,1.03125 Z M1.83398808,153.688622 L10.8817427,160.809651 M1.83398808,146.419224 L18.0919347,160.809651 M1.83398808,139.149825 L25.3021266,160.809651 M1.83398808,131.880426 L32.5123186,160.809651 M1.83398808,124.611028 L39.7225106,160.809651 M1.83398808,117.341629 L46.9327025,160.809651 M1.83398808,110.07223 L54.1428945,160.809651 M1.83398808,102.802832 L61.3530865,160.809651 M1.83398808,95.5334328 L68.5632784,160.809651 M1.83398808,88.2640342 L75.7734704,160.809651 M1.83398808,80.9946355 L82.9836624,160.809651 M1.83398808,73.7252368 L90.1938544,160.809651 M1.83398808,66.4558381 L97.4040463,160.809651 M1.83398808,59.1864394 L104.614238,160.809651 M1.83398808,51.9170408 L111.82443,160.809651 M1.83398808,44.6476421 L119.034622,160.809651 M1.83398808,37.3782434 L126.244814,160.809651 M1.83398808,30.1088447 L133.455006,160.809651 M1.83398808,22.839446 L140.665198,160.809651 M1.83398808,15.5700474 L147.87539,160.809651 M1.83398808,8.30064868 L155.085582,160.809651 M1.83398808,1.03125 L160.602824,159.328125 M9.03544665,1.03125 L160.602824,152.204647 M16.2369052,1.03125 L160.602824,145.081168 M23.4383638,1.03125 L160.602824,137.95769 M30.6398223,1.03125 L160.602824,130.834212 M37.8412809,1.03125 L160.602824,123.710733 M45.0427395,1.03125 L160.602824,116.587255 M52.244198,1.03125 L160.602824,109.463777 M59.4456566,1.03125 L160.602824,102.340298 M66.6471152,1.03125 L160.602824,95.2168201 M73.8485737,1.03125 L160.602824,88.0933418 M81.0500323,1.03125 L160.602824,80.9698635 M88.2514909,1.03125 L160.602824,73.8463851 M95.4529494,1.03125 L160.602824,66.7229068 M102.654408,1.03125 L160.602824,59.5994285 M109.855867,1.03125 L160.602824,52.4759502 M117.057325,1.03125 L160.602824,45.3524718 M124.258784,1.03125 L160.602824,38.2289935 M131.460242,1.03125 L160.602824,31.1055152 M138.661701,1.03125 L160.602824,23.9820369 M145.863159,1.03125 L160.602824,16.8585586 M153.064618,1.03125 L160.602824,9.73508023" stroke="#F3F302" fill-opacity="0" fill="#FF0000"></path>
+                    <line x1="81.46875" y1="79.40625" x2="81.46875" y2="84.5625" stroke="#F3F302" fill="#F3F302" stroke-linecap="square" transform="translate(81.468750, 81.984375) rotate(90.000000) translate(-81.468750, -81.984375) "></line>
+                    <line x1="81.46875" y1="79.40625" x2="81.46875" y2="84.5625" stroke="#F3F302" fill="#F3F302" stroke-linecap="square"></line>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="0" y="157.78125" width="7.21875" height="7.21875"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="79.40625" y="0" width="7.21875" height="7.21875"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="157.78125" y="157.78125" width="7.21875" height="7.21875"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="157.78125" y="79.40625" width="7.21875" height="7.21875"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="157.78125" y="0" width="7.21875" height="7.21875"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="79.40625" y="157.78125" width="7.21875" height="7.21875"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="0" y="79.40625" width="7.21875" height="7.21875"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="0" y="0" width="7.21875" height="7.21875"></rect>
+                </g>
+            </svg>
+            <svg id='svg-dd-7' viewBox='0 0 1280 859' class='center-img totally-hidden'>
+                <path d="M955,149 L1120,149 L1120,314 L955,314 L955,149 Z" id="drop7" stroke="#256FFF" stroke-width="8" fill-opacity="0" fill="#FF0000" stroke-dasharray="10,9"></path>
+                <g id="drag7" transform="translate(558.000000, 397.000000)">
+                    <path d="M160.40625,2.53125 L160.40625,160.40625 L2.53125,160.40625 L2.53125,2.53125 L160.40625,2.53125 Z" stroke="#F3F302" stroke-width="3" fill-opacity="0" fill="#FF0000"></path>
+                    <path d="M1.03125,1.03125 L161.90625,1.03125 L161.90625,161.90625 L1.03125,161.90625 L1.03125,1.03125 Z M1.83398808,153.688622 L10.8817427,160.809651 M1.83398808,146.419224 L18.0919347,160.809651 M1.83398808,139.149825 L25.3021266,160.809651 M1.83398808,131.880426 L32.5123186,160.809651 M1.83398808,124.611028 L39.7225106,160.809651 M1.83398808,117.341629 L46.9327025,160.809651 M1.83398808,110.07223 L54.1428945,160.809651 M1.83398808,102.802832 L61.3530865,160.809651 M1.83398808,95.5334328 L68.5632784,160.809651 M1.83398808,88.2640342 L75.7734704,160.809651 M1.83398808,80.9946355 L82.9836624,160.809651 M1.83398808,73.7252368 L90.1938544,160.809651 M1.83398808,66.4558381 L97.4040463,160.809651 M1.83398808,59.1864394 L104.614238,160.809651 M1.83398808,51.9170408 L111.82443,160.809651 M1.83398808,44.6476421 L119.034622,160.809651 M1.83398808,37.3782434 L126.244814,160.809651 M1.83398808,30.1088447 L133.455006,160.809651 M1.83398808,22.839446 L140.665198,160.809651 M1.83398808,15.5700474 L147.87539,160.809651 M1.83398808,8.30064868 L155.085582,160.809651 M1.83398808,1.03125 L160.602824,159.328125 M9.03544665,1.03125 L160.602824,152.204647 M16.2369052,1.03125 L160.602824,145.081168 M23.4383638,1.03125 L160.602824,137.95769 M30.6398223,1.03125 L160.602824,130.834212 M37.8412809,1.03125 L160.602824,123.710733 M45.0427395,1.03125 L160.602824,116.587255 M52.244198,1.03125 L160.602824,109.463777 M59.4456566,1.03125 L160.602824,102.340298 M66.6471152,1.03125 L160.602824,95.2168201 M73.8485737,1.03125 L160.602824,88.0933418 M81.0500323,1.03125 L160.602824,80.9698635 M88.2514909,1.03125 L160.602824,73.8463851 M95.4529494,1.03125 L160.602824,66.7229068 M102.654408,1.03125 L160.602824,59.5994285 M109.855867,1.03125 L160.602824,52.4759502 M117.057325,1.03125 L160.602824,45.3524718 M124.258784,1.03125 L160.602824,38.2289935 M131.460242,1.03125 L160.602824,31.1055152 M138.661701,1.03125 L160.602824,23.9820369 M145.863159,1.03125 L160.602824,16.8585586 M153.064618,1.03125 L160.602824,9.73508023" stroke="#F3F302" fill-opacity="0" fill="#FF0000"></path>
+                    <line x1="81.46875" y1="79.40625" x2="81.46875" y2="84.5625" stroke="#F3F302" fill="#F3F302" stroke-linecap="square" transform="translate(81.468750, 81.984375) rotate(90.000000) translate(-81.468750, -81.984375) "></line>
+                    <line x1="81.46875" y1="79.40625" x2="81.46875" y2="84.5625" stroke="#F3F302" fill="#F3F302" stroke-linecap="square"></line>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="0" y="157.78125" width="7.21875" height="7.21875"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="79.40625" y="0" width="7.21875" height="7.21875"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="157.78125" y="157.78125" width="7.21875" height="7.21875"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="157.78125" y="79.40625" width="7.21875" height="7.21875"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="157.78125" y="0" width="7.21875" height="7.21875"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="79.40625" y="157.78125" width="7.21875" height="7.21875"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="0" y="79.40625" width="7.21875" height="7.21875"></rect>
+                    <rect stroke="#000000" stroke-width="2" fill="#FFFCFC" x="0" y="0" width="7.21875" height="7.21875"></rect>
+                </g>
+            </svg>
+            <svg id='svg-dd-8' viewBox='0 0 1280 859' class='center-img totally-hidden'>
+                <path d="M393,560 L554,560 L554,629 L393,629 L393,560 Z" id="drop8" stroke="#256FFF" stroke-width="8" fill-opacity="0" fill="#FF0000" stroke-dasharray="10,9"></path>
+                <g id="drag8" transform="translate(560.000000, 315.000000)" stroke="#19FF00">
+                    <line x1="0" y1="2.46428571" x2="161" y2="2.46428571" stroke-width="6"></line>
+                    <rect stroke-width="4" fill-opacity="0" fill="#FF0000" x="2.0125" y="2.46428571" width="156.975" height="64.0714286"></rect>
+                    <path d="M2.0125,2.46428571 L158.9875,2.46428571 L158.9875,66.5357143 L2.0125,66.5357143 L2.0125,2.46428571 Z M1.78952776,60.7986071 L7.29087299,67.4677118 M1.78952776,52.1130918 L14.365565,67.375854 M1.78952776,43.4275765 L21.6360895,67.5381732 M1.78952776,34.7420612 L28.984583,67.8093157 M1.78952776,26.0565459 L35.8248686,67.4740073 M1.78952776,17.3710306 L43.2496696,67.8598268 M1.78952776,8.68551531 L50.4690503,68.0042611 M1.78952776,2.74231431e-12 L57.2128227,67.6635209 M8.81640551,2.3230941e-12 L64.2372666,67.6858793 M15.8432833,2.25203982e-12 L71.5555143,68.0697348 M22.870161,2.3230941e-12 L78.275834,67.7259528 M29.8970388,2.18098555e-12 L85.2727253,67.7234638 M36.9239165,2.25203982e-12 L92.5632948,68.0843098 M43.9507943,2.3230941e-12 L99.3313881,67.8105782 M50.977672,2.3230941e-12 L106.278786,67.7618324 M58.0045498,2.3230941e-12 L113.256287,67.7567679 M65.0314275,2.25203982e-12 L120.428574,67.9991937 M72.0583053,2.38704294e-12 L127.145992,67.6936678 M79.085183,2.3230941e-12 L134.17977,67.7899455 M86.1120608,2.45809722e-12 L140.99432,67.6335643 M93.1389385,2.38704294e-12 L147.795205,67.4825938 M100.165816,2.38704294e-12 L154.894412,67.7313332 M107.192694,2.31954138e-12 L156.709422,61.466395 M114.219572,2.39059566e-12 L156.709422,52.9552261 M121.24645,2.24848711e-12 L156.709422,44.4440572 M128.273327,2.39059566e-12 L156.709422,35.9328883 M135.300205,2.45987357e-12 L156.709422,27.4217194 M142.327083,2.39059566e-12 L156.709422,18.9105505 M149.353961,2.67037186e-12 L156.709422,10.3993816" fill-opacity="0" fill="#FF0000"></path>
+                </g>
+            </svg>
+            <svg id='svg-dd-9' viewBox='0 0 1280 859' class='center-img totally-hidden'>
+                <path d='M368,601 L619,601 L619,791 L368,791 L368,601 Z' id='drop9' stroke='#256FFF' stroke-width='8' fill-opacity='0' fill='#FF0000' stroke-dasharray='10,9'></path>
+                <g id='drag9' transform='translate(515.000000, 255.000000)' stroke='#FFFF00'>
+                    <rect stroke-width='4' fill-opacity='0' fill='#FD0A0A' x='1.54461538' y='3.91752577' width='247.910769' height='182.164948'></rect>
+                    <line x1='2.31692308' y1='4.89690722' x2='248.683077' y2='4.89690722' stroke-width='6' fill='#FFFF00' stroke-linecap='square'></line>
+                    <line x1='1.15846154' y1='95' x2='249.841538' y2='95' stroke-width='4' fill='#FFFF00' stroke-linecap='square'></line>
+                    <line x1='125.5' y1='2.93814433' x2='125.5' y2='187.061856' stroke-width='4' fill='#FFFF00' stroke-linecap='square'></line>
+                </g>
+            </svg>
+            <svg id='svg-dd-10' viewBox='0 0 1280 859' class='center-img totally-hidden'>
+                <path d='M367,582 L619,582 L619,600 L367,600 L367,582 Z' id='drop10' stroke='#256FFF' stroke-width='8' fill-opacity='0' fill='#FF0000' stroke-dasharray='10,9'></path>
+                <g id='drag10' transform='translate(514.000000, 342.000000)' stroke='#FFFF00' stroke-width='4'>
+                    <rect fill-opacity='0' fill='#FD0A0A' x='0' y='0' width='252' height='18'></rect>
+                    <line x1='0.765957447' y1='0.31358885' x2='250.468085' y2='17.0905923' fill='#FFFF00' stroke-linecap='square'></line>
+                    <line x1='0.765957447' y1='17.0905923' x2='250.145481' y2='0.333927508' fill='#FFFF00' stroke-linecap='square'></line>
+                </g>
+            </svg>
+
+            <div id="air-div" class="center-img"></div>
+            <div id="pause-ch2" class="div-pause"></div>
+            <span id="label-ch2" class="monitor-label">ion beam view</span>
+            <span id="label-ch4" class="monitor-label">CCD view</span>
+            <canvas id="ch2-canvas" class="micrograph-canvas canvas-top"></canvas>
+            <div id="scalebar-div-ch2" class="info-bar flex">
+                <div id="scalebar-ch2" class="scale-ch2 scalebar totally-hidden"></div>
+                <p id="scale-unit-ch2" class="scale-ch2 scale-unit totally-hidden">20µm</p>
+            </div>
+            <canvas id="ch4-canvas" class="micrograph-canvas"></canvas>
+        </div>
+        <div id="controls-right">
+            <div id="third-div-righttop" class="flex-between top-controls-set">
+                <fieldset id="fieldset-ar">
+
+                    <div id="htr-div" class="flex div-disabled">
+                        <button tabindex="0" type="button" id="htr-btn" class="controls-btn" disabled></button>
+                        <p class="btn-label">HT</p>
+                    </div>
+                    <div id="snap-right-div" class="flex div-disabled">
+                        <button tabindex="0" type="button" id="snap-right-btn" class="controls-btn" disabled></button>
+                        <p class="btn-label">SNAPSHOT</p>
+                    </div>
+                    <label id="acc-volt-right-label" class="label-disabled">ACC VOLTAGE</label>
+                    <select id="acc-volt-right">
+                        <option value="0" selected="selected" disabled></option>
+                        <option value="a" disabled>2Kv</option>
+                        <option value="b" disabled>5Kv</option>
+                        <option value="c" disabled>10Kv</option>
+                        <option value="d">30Kv</option>
+                    </select>
+                    <label id="beam-current-right-label" class="label-disabled">BEAM CURRENT</label>
+                    <select id="beam-current-right">
+                        <option value="0" selected="selected" disabled></option>
+                        <option value="a">10pA</option>
+                        <option value="b" disabled>0.1nA</option>
+                        <option value="c" disabled>1nA</option>
+                        <option value="d" disabled>3nA</option>
+                        <option value="e" disabled>30nA</option>
+                    </select>
+                </fieldset>
+
+
+                <fieldset id="fieldset-br">
+                    <div id="live-right-div" class="flex div-disabled">
+                        <button tabindex="0" type="button" id="live-right-btn" class="controls-btn" disabled></button>
+                        <div>
+                            <p class="btn-label">LIVE VIEW</p>
+                        </div>
+                    </div>
+                    <div id="capture-right-div" class="flex div-disabled">
+                        <button tabindex="0" type="button" id="capture-right-btn" class="controls-btn" disabled></button>
+                        <p class="btn-label">CAPTURE</p>
+                    </div>
+                    <label id="magnificationr-label" class="label-disabled">MAGNIFICATION</label>
+                    <select id="magnificationr">
+                        <option value="0" selected="selected" disabled></option>
+                        <option value="a" disabled>500x</option>
+                        <option value="b" disabled>1000x</option>
+                        <option value="c">3000x</option>
+                        <option value="d" disabled>5000x</option>
+                        <option value="e" disabled>10000x</option>
+                        <option value="f" disabled>50000x</option>
+                    </select>
+                </fieldset>
+            </div>
+
+
+            <p id="focus-right-label" class="slider-label label-disabled">FOCUS</p>
+            <div id="focus-right-div" class="slider-div div-disabled">
+                <div id="focus-right" class="tab-slider"></div>
+            </div>
+
+            <div id="autobright-right-div" class="flex div-disabled">
+                <button tabindex="0" type="button" id="autobright-right-btn" class="controls-btn" disabled></button>
+                <div>
+                    <p class="btn-label long-label">AUTO BRIGHTNESS &amp; CONTRAST</p>
+                </div>
+            </div>
+            <div class="stigmator-beamshift">
+                <div class="flex">
+                    <div class="left-gap">
+                        <p id="beam-shift-label" class="spinn-label label-disabled">BEAM SHIFT</p>
+                    </div>
+                    <div class="bsr-div spec-arrow-column column-l div-disabled">
+                        <div class="spinn-l-1"></div>
+                        <button id="beamshift-right-x-down" class="spinn-btn spinn-l-2 btn-disabled" disabled></button>
+                        <div class="spinn-l-3"></div>
+                    </div>
+                    <div class="bsr-div spec-arrow-column div-disabled">
+                        <button id="beamshift-right-y-up" class="spinn-btn spinn-mid-1 btn-disabled" disabled></button>
+                        <div class="spinn-mid-2"> </div>
+                        <button id="beamshift-right-y-down" class="spinn-btn spinn-mid-3 btn-disabled" disabled></button>
+                    </div>
+                    <div class="bsr-div spec-arrow-column div-disabled">
+                        <div class="spinn-r-1"></div>
+                        <button id="beamshift-right-x-up" class="spinn-btn spinn-r-2 btn-disabled" disabled></button>
+                        <div class="spinn-r-3"></div>
+                    </div>
+                    <div class="right-gap">
+                    </div>
+                </div>
+
+            </div>
+            <fieldset id="dropdown-rightbottom">
+                <label id="patterns-label" class="label-disabled">PATTERN</label>
+                <select id="patterns">
+                    <option value="0" selected="selected" disabled></option>
+                    <option value="a">Rectangular Si milling</option>
+                    <option value="b" disabled>Rectangular Al milling</option>
+                    <option value="c" disabled>Pt_Deposition</option>
+                    <option value="d" disabled>Cross-section cutting</option>
+                    <option value="e" disabled>Cleaning cross-section cutting</option>
+                </select>
+            </fieldset>
+
+            <div id="delete-pattern-div" class="flex div-disabled">
+                <button tabindex="0" type="button" id="delete-pattern-btn" class="controls-btn" disabled></button>
+                <div>
+                    <p class="btn-label">DELETE PATTERN</p>
+                </div>
+            </div>
+            <div id="remaining-time-div" class="div-disabled">
+                <div id="time-units" class="flex-between">
+                    <p></p>
+                    <div>
+                        <span>hr</span><span></span>
+                        <span>min</span><span></span>
+                        <span>sec</span>
+                    </div>
+                </div>
+                <div class="flex-between">
+                    <p>REMAINING TIME</p>
+                    <div id="elapsed-time">
+                        <span id="cd_h">00</span><span>&nbsp;:</span>
+                        <span id="cd_m">00</span><span>&nbsp;:</span>
+                        <span id="cd_s">00</span></div>
+                </div>
+                <div id="remaining-time-progressbar"></div>
+            </div>
+
+            <div id="right-checkboxes-div" class="flex-between">
+                <form id="pt-needle-form" class="checkbox-disabled">
+                    <input type="checkbox" id="pt-needle" onclick="pt_needle_fn()" disabled> Pt Needle</form>
+            </div>
+
+            <div id="pattern-controls-div">
+                <p id="pattern-controls-label" class="label-disabled">PATTERN CONTROL</p>
+                <div id="pattern-control-btns" class="flex-between">
+                    <div id="start-div" class="flex div-disabled">
+                        <button tabindex="0" type="button" id="start-btn" class="controls-btn" disabled></button>
+                        <p class="btn-label">START</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <p class="spinner totally-hidden">
+                <input id="spinner-beamshift-r-x">
+                <input id="spinner-beamshift-r-y">
+                <input id="spinner-stage-z-up">
+                <input id="spinner-stage-z-down">
+            </p>
+        </div>
+    </div>
+
+    <div id="modal-loading" class="flex any-modal">
+        <div class="modal-window">
+            <div class="modal-title flex-between">
+                <p>Loading resources</p>
+            </div>
+            <div class="flex modal-content">
+                <div class="loading-bar"> </div>
+            </div>
+            <div class="invisible-margin"></div>
+        </div>
+    </div>
+
+    <div id="modal-messages" class="flex any-modal totally-hidden">
+        <div class="modal-window">
+            <div id="title-modal-area" class="modal-title flex-between">
+                <p> </p><span id="close-area" class="close-modal">×</span>
+            </div>
+            <div id="info-area" class="modal-content">
+                The specimen chamber is maintained at high vacuum except during loading and unloading samples.
+            </div>
+            <div class="invisible-margin"></div>
+        </div>
+    </div>
+
+    <div id="modal-instructions" class="flex any-modal totally-hidden">
+        <div class="modal-window">
+            <div id="title-modal-area" class="modal-title flex-between">
+                <p> </p><span id="close-modal-instructions" class="close-modal">×</span>
+            </div>
+            <div id="modal-instructions-area" class="modal-content">
+                The next step is to move the sample into the eucentric position. The eucentric height for this simulator is 7mm. Bring the sample to this position by adjusting the WD to 7mm. <br>Different instruments can have slightly different Eucentric Heights.
+            </div>
+            <div class="invisible-margin"></div>
+        </div>
+    </div>
+    <script src='js/gsap/3.2.6/gsap.min.js'></script>
+    <script src='js/gsap/3.2.6/Draggable.min.js'></script>
+    <script src="js/simulator_snippets.js"></script>
+    <script src="js/FIB_simulator.js"></script>
+</body></html>

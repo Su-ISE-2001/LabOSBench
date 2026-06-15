@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="56.6px" height="56.6px" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <linearGradient id="PSgrad_0" x1="0" x2="0" y1="1" y2="0">
+      <stop offset="0" stop-color="rgb(0,0,0)" stop-opacity="0.17"/>
+      <stop offset="1" stop-color="rgb(255,255,255)" stop-opacity="0.17"/>
+    </linearGradient>
+    <radialGradient id="gradient-2" gradientUnits="userSpaceOnUse" cx="300" cy="334" r="28.409" gradientTransform="matrix(0.094695, -1.101923, 1.110311, 0.095413, -99.251978, 632.707861)" spreadMethod="pad">
+      <stop offset="0.837" style="stop-color: rgba(225, 224, 224, 0);"/>
+      <stop offset="0.904" style="stop-color: rgba(0, 0, 0, 0.843);"/>
+    </radialGradient>
+  </defs>
+  <path fill-rule="evenodd" fill="rgb(225, 224, 224)" d="M 28.299 0 C 43.929 0 56.6 12.669 56.6 28.297 C 56.6 43.926 43.929 56.595 28.299 56.595 C 12.67 56.595 0 43.926 0 28.297 C 0 12.669 12.67 0 28.299 0 Z" style="pointer-events: none;"/>
+  <path fill="url(#PSgrad_0)" d="M 28.299 0 C 43.929 0 56.6 12.669 56.6 28.297 C 56.6 43.926 43.929 56.595 28.299 56.595 C 12.67 56.595 0 43.926 0 28.297 C 0 12.669 12.67 0 28.299 0 Z" style="pointer-events: none;"/>
+  <path fill="url(#PSgrad_0)" d="M 28.299 1.415 C 43.148 1.415 55.185 13.45 55.185 28.297 C 55.185 43.145 43.148 55.18 28.299 55.18 C 13.452 55.18 1.414 43.145 1.414 28.297 C 1.414 13.45 13.452 1.415 28.299 1.415 Z" style="pointer-events: none;"/>
+  <path fill-rule="evenodd" fill-opacity="0.122" fill="rgb(255, 255, 255)" d="M 28.047 1.415 C 42.484 1.415 54.263 12.793 54.904 27.071 C 54.922 27.478 54.931 28.297 54.931 28.297 C 54.931 28.297 41.458 24.393 27.899 24.393 C 14.575 24.393 1.161 28.297 1.161 28.297 C 1.161 28.297 1.177 27.213 1.209 26.677 C 2.047 12.585 13.742 1.415 28.047 1.415 Z" style="pointer-events: none;"/>
+  <path transform="matrix(-0.682025, 0.731329, -0.731328, -0.682025, 477.210907, 36.72921)" d="M 300 334 m -28.155 0 a 28.155 28.155 0 1 0 56.31 0 a 28.155 28.155 0 1 0 -56.31 0 Z M 300 334 m -26.63 0 a 26.63 26.63 0 0 1 53.26 0 a 26.63 26.63 0 0 1 -53.26 0 Z" style="fill: url(#gradient-2);" bx:shape="ring 300 334 26.63 26.63 28.155 28.155 1@7b269f2e"/>
+</svg>

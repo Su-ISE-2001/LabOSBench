@@ -1,0 +1,305 @@
+<!doctype html>
+<!-- 
+Created  by Andres Vasquez for AMMRF'S https://www.myscope.training
+info@andresvasquez.net  —— https://www.andresvasquez.net ——
+copyright:This work is licensed under a Creative Commons Attribution 4.0 International License.
+-->
+<!--< >-->
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>APT Simulator</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/APT_simulator.css">
+    <style>
+
+    </style>
+    <link rel="stylesheet" href="css/custom-dd-jquery-ui.css">
+    <!--    <link rel="stylesheet" href="css/jquery-ui.theme.css">-->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+</head>
+
+<body>
+    <div id="top-bar" class="flex-evenly">
+        <div class="flex" id="top-bar-left">
+            <a id="myscope-logo" href="http://localhost" title="Start Page"></a>
+        </div>
+        <div id="top-instructions" class="top-instructions-on">
+            <p id="top-instructions-txt">Choose and insert sample</p>
+        </div>
+    </div>
+    <div id="simulator-base" class="flex-between screen-1">
+        <div id="left-panel">
+            <div id="row-up" class="ru-screen-1">
+                <div id="row-up-left" class="rul-screen-1">
+                    <p id="top-canvas-title" class="win-title">Field Evaporation Image</p>
+                    <canvas id="top-canvas" class="screen-1-canvas field-evaporation"></canvas>
+                </div>
+                <div id="" class="row-up-right flex-between">
+                    <div id="row-up-right-top">
+                        <p class="win-title">Detection Rate History</p>
+                        <div class="y-detection -totally-hidden">
+                            <p id="detect-rate-y-label-6" class="detect-rate-y not-visible">5</p>
+                            <p id="detect-rate-y-label-5" class="detect-rate-y not-visible">4</p>
+                            <p id="detect-rate-y-label-4" class="detect-rate-y not-visible">3</p>
+                            <p id="detect-rate-y-label-3" class="detect-rate-y not-visible">2</p>
+                            <p id="detect-rate-y-label-2" class="detect-rate-y not-visible">1</p>
+                            <p id="detect-rate-y-label-1" class="detect-rate-y not-visible">0</p>
+                        </div>
+                        <div class="x-pulse- totally-hidden">
+                            <p id="x-pulse-top">0</p>
+                        </div>
+                        <canvas id="detection-rate-canvas" class="screen-1-canvas"></canvas>
+                    </div>
+                    <div id="row-up-right-bottom">
+                        <p class="win-title">Voltage History</p>
+                        <div id="div-legend">
+                            <div id="pv-legend" class="flex totally-hidden">
+                                <div id="pv-line"></div>
+                                <p class="win-legend">Voltage</p>
+                            </div>
+                            <div id="v-legend" class="flex totally-hidden">
+                                <div id="v-line"></div>
+                                <p class="win-legend">Pulse Voltage</p>
+                            </div>
+                        </div>
+                        <div id="x-pulse-bottom-wrapper" class="flex">
+                            <div class="x-pulse">
+                                <div class="x-tick"> </div>
+                                <p id="x-pulse-bottom-0">0</p>
+                            </div>
+                            <div class="x-pulse">
+                                <div class="x-tick"> </div>
+                                <p id="x-pulse-bottom-1"></p>
+                            </div>
+                            <div class="x-pulse">
+                                <div class="x-tick"> </div>
+                                <p id="x-pulse-bottom-2"></p>
+                            </div>
+                            <div class="x-pulse">
+                                <div class="x-tick"> </div>
+                                <p id="x-pulse-bottom-3"></p>
+                            </div>
+                            <div class="x-pulse">
+                                <div class="x-tick"> </div>
+                                <p id="x-pulse-bottom-4"></p>
+                            </div>
+                            <div class="x-pulse">
+                                <div class="x-tick"> </div>
+                                <p id="x-pulse-bottom-5"></p>
+                            </div>
+                        </div>
+                        <canvas id="voltage-history-canvas" class="screen-1-canvas"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div id="row-middle" class="rm-screen-1">
+                <p id="bottom-canvas-title" class="win-title">Mass Spectrum</p>
+                <canvas id="bottom-canvas" class="screen-1-canvas spectrum"></canvas>
+            </div>
+            <div class="flex-between statistics not-visible">
+                <div class="stats flex-evenly">
+                    <div class="stats-name">
+                        <p class="stat-title">LOAD LOCK</p>
+                    </div>
+                    <div class="stats-value">
+                        <p class="stat-title">7.65e-08</p>
+                    </div>
+                </div>
+                <div class="stats flex-evenly">
+                    <div class="stats-name">
+                        <p class="stat-title">BUFFER</p>
+                    </div>
+                    <div class="stats-value">
+                        <p class="stat-title">4.6e-9</p>
+                    </div>
+                </div>
+                <div class="stats flex-evenly">
+                    <div class="stats-name">
+                        <p class="stat-title">ANALYSIS</p>
+                    </div>
+                    <div class="stats-value">
+                        <p class="stat-title">1.3e-11</p>
+                    </div>
+                </div>
+                <div class="stats"></div>
+            </div>
+            <div class="flex-between statistics not-visible">
+                <div class="stats flex-evenly">
+                    <div class="stats-name">
+                        <p class="stat-title">FLIGHT LENGTH</p>
+                    </div>
+                    <div class="stats-value">
+                        <p id="flight_val" class="stat-title">100 mm</p>
+                    </div>
+                </div>
+                <div class="stats flex-evenly">
+                    <div class="stats-name">
+                        <p class="stat-title">ELAPSED TIME</p>
+                    </div>
+                    <div class="stats-value">
+                        <p id="elapsed-time" class="stat-title"></p>
+                        <p id="elapsed-time-label" class="stat-time-label">HOURS&nbsp; &nbsp;MIN</p>
+                    </div>
+                </div>
+                <div class="stats flex-evenly">
+                    <div class="stats-name">
+                        <p class="stat-title">TOTAL IONS</p>
+                    </div>
+                    <div class="stats-value">
+                        <p id="total-ions" class="stat-title">0</p>
+                    </div>
+                </div>
+                <div class="stats"></div>
+            </div>
+            <div id="reconstruction-panel" class="totally-hidden">
+                <canvas id="reconstruction-canvas"></canvas>
+            </div>
+        </div>
+        <div id="controls-right">
+            <div id="controls-reconstruction" class="totally-hidden">
+                <fieldset>
+                    <label id="icf-label">ICF</label>
+                    <select id="icf">
+                        <option value="0" selected="selected"></option>
+                        <option value="1.4">1.4</option>
+                        <option value="1.9">1.9</option>
+                    </select>
+                    <label id="k-factor-label">K FACTOR</label>
+                    <select id="k-factor">
+                        <option value="0" selected="selected"></option>
+                        <option value="3.0">3.0</option>
+                        <option value="3.6">3.6</option>
+                    </select>
+                </fieldset>
+                <div id="detect-eff-stats" class="stats flex">
+                    <div id="detect-eff-label" class="stats-name">
+                        <p class="stat-title">DETECTOR EFFICIENCY</p>
+                    </div>
+                    <div id="detect-eff-val" class="stats-value">
+                        <p class="stat-title">0.57</p>
+                    </div>
+                </div>
+            </div>
+            <div id="controls-right-top">
+                <fieldset>
+                    <label>SAMPLE</label>
+                    <select id="sample">
+                        <option value="0" selected="selected"></option>
+                        <option value="voltage">STEEL (VOLT)</option>
+                        <option value="laser">STEEL (LASER)</option>
+                    </select>
+                </fieldset>
+                <div id="align-sample-div" class="flex half-visible">
+                    <button tabindex="0" type="button" id="align-sample-btn" class="controls-btn" disabled> </button>
+                    <p id="align-label">ALIGN SAMPLE</p>
+                </div>
+                <fieldset>
+                    <label id="specimen-label" class="half-visible">SPECIMEN TEMPERATURE</label>
+                    <select id="specimen-temp">
+                        <option value="0" selected="selected"></option>
+                        <option value="25k">25k</option>
+                        <option value="30k" disabled>30k</option>
+                        <option value="40k" disabled>40k</option>
+                        <option value="60k" disabled>60k</option>
+                        <option value="70k" disabled>70k</option>
+                        <option value="75k">75k</option>
+                        <option value="135k">135k</option>
+                    </select>
+                    <label id="detection-label" class="half-visible">DETECTION RATE</label>
+                    <select id="detection-rate">
+                        <option value="0" selected="selected"></option>
+                        <option value="0.5%">0.5%</option>
+                        <option value="1%">1%</option>
+                        <option value="1.5%" disabled>1.5%</option>
+                        <option value="2%" disabled>2%</option>
+                        <option value="2.5%" disabled>2.5%</option>
+                        <option value="3%" disabled>3%</option>
+                    </select>
+                </fieldset>
+                <fieldset>
+                    <label id="pulse-fq-label" class="not-visible">VOLTAGE PULSE FREQUENCY</label>
+                    <select id="pulse-freq">
+                        <option value="0" selected="selected"></option>
+                        <option value="100 kHz" disabled>100 kHz</option>
+                        <option value="160 kHz" disabled>160 kHz</option>
+                        <option value="200 kHz">200 kHz</option>
+                        <option value="250 kHz" disabled>250 kHz</option>
+                    </select>
+                    <br>
+                    <label id="pulse-e-label" class="not-visible">VOLTAGE PULSE</label>
+                    <!--                    <label class="totally-hidden">LASER PULSE ENERGY</label>-->
+                    <select id="pulse-energy">
+                        <option value="0" selected="selected"></option>
+                    </select>
+                </fieldset>
+            </div>
+            <div id="controls-right-bottom">
+                <div id="align-laser-div" class="flex half-visible">
+                    <button tabindex="0" type="button" id="align-laser-btn" class="controls-btn" disabled> </button>
+                    <p>ALIGN LASER</p>
+                </div>
+                <div id="start-div" class="flex half-visible">
+                    <button tabindex="0" type="button" id="start-stop-btn" class="controls-btn" disabled> </button>
+                    <p id="start-stop-label">START</p>
+                </div>
+                <div id="reconstruct-div" class="flex half-visible">
+                    <button tabindex="0" type="button" id="reconstruct-btn" class="controls-btn" disabled> </button>
+                    <p>RECONSTRUCT</p>
+                </div>
+                <div id="finish-div" class="flex totally-hidden">
+                    <button tabindex="0" type="button" id="finish-btn" class="controls-btn" disabled> </button>
+                    <p>FINISH</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-finish" class="flex any-modal totally-hidden">
+        <div class="modal-window modal-end">
+            <div id="question-data-modal" class="modal-title flex-between">
+                <p>Congratulations, you have completed the APT simulator!</p>
+                <p></p><span id="close-finish-modal">×</span>
+            </div>
+            <div class="modal-content">
+
+                <div id="save-data-btns" class="flex">
+                    <button class="btn" id="start-again">Start again</button>
+                    <button class="btn" id="go-home">Go to Start Page</button>
+                </div>
+            </div>
+            <div class="invisible-margin"></div>
+        </div>
+    </div>
+    <div id="modal-reconstruct-info" class="flex any-modal totally-hidden">
+        <div class="modal-window modal-reconstruct">
+            <div class="modal-title flex-between">
+                <p></p><span id="close-data-modal">×</span>
+            </div>
+            <div id="saved-data" class="modal-content">
+                <br>
+                <p> The following reconstruction assumes that 50 million ions have been collected under voltage mode with a pulse fraction of 25% and a sample temperature of 40 K.</p><br>
+                <p> Close this popup and proceed to Reconstruction.</p><br>
+                <p>Select an ICF and a K Factor to visualise.</p><br>
+                <p>When ready select ‘finish’ to end the data visualisation.</p><br>
+            </div>
+            <div class="invisible-margin"></div>
+        </div>
+    </div>
+    <div id="modal-loading" class="flex any-modal totally-hidden">
+        <div class="modal-window">
+            <div class="modal-title flex-between">
+                <p>Loading resources</p><span id="close-modal" class="totally-hidden">×</span>
+            </div>
+            <div class="flex modal-content">
+                <div class="loading-bar"> </div>
+            </div>
+            <div class="invisible-margin"></div>
+        </div>
+    </div>
+    <script src="/static/benchmark_apt.js"></script>
+    <script src="js/simulator_snippets.js"></script>
+    <script src="js/apt/elapsed_time.js"></script>
+    <script src="js/APT_simulator.js"></script>
+</body></html>

@@ -1,0 +1,109 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GUIAgentTEMTaskEpisode",
+  "description": "Log format for a single GUIAgent episode on the TEM simulator task.",
+  "type": "object",
+  "required": ["task_id", "episode_id", "env", "success", "summary", "grounding_metrics", "subtasks", "steps"],
+  "properties": {
+    "task_id": { "type": "string", "description": "Task identifier, e.g. 'TEM-Load-And-Acquire-01'." },
+    "episode_id": { "type": "string", "description": "Unique id for this run/episode." },
+    "env": { "type": "string", "description": "Environment name, e.g. 'TEM_Simulator'." },
+    "agent_name": { "type": "string", "nullable": true, "description": "Optional. Name or version of the agent." },
+    "success": { "type": "boolean", "description": "Whether the overall task is successfully completed (all subtasks S1–S8)." },
+    "timestamps": {
+      "type": "object",
+      "properties": {
+        "start_time": { "type": "string", "format": "date-time" },
+        "end_time": { "type": "string", "format": "date-time" },
+        "duration_sec": { "type": "number" }
+      },
+      "required": ["duration_sec"],
+      "additionalProperties": false
+    },
+    "summary": {
+      "type": "object",
+      "required": ["optimal_steps", "actual_steps", "step_efficiency"],
+      "properties": {
+        "optimal_steps": { "type": "integer", "minimum": 0 },
+        "actual_steps": { "type": "integer", "minimum": 0 },
+        "step_efficiency": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "grounding_metrics": {
+      "type": "object",
+      "required": ["widget_grounding_accuracy", "text_grounding_accuracy", "state_grounding_accuracy"],
+      "properties": {
+        "widget_grounding_accuracy": { "type": "number", "minimum": 0, "maximum": 1 },
+        "text_grounding_accuracy": { "type": "number", "minimum": 0, "maximum": 1 },
+        "state_grounding_accuracy": { "type": "number", "minimum": 0, "maximum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "subtasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["subtask_id", "name", "success", "attempts"],
+        "properties": {
+          "subtask_id": { "type": "string" },
+          "name": { "type": "string" },
+          "success": { "type": "boolean" },
+          "attempts": { "type": "integer", "minimum": 0 },
+          "notes": { "type": "string" },
+          "phase": { "type": "string" },
+          "grounding_focus": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "success_criteria": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["index", "timestamp_offset_sec", "subtask_id", "action_type", "target", "hit_expected_target", "relies_on_text", "state_snapshot"],
+        "properties": {
+          "index": { "type": "integer", "minimum": 0 },
+          "timestamp_offset_sec": { "type": "number", "minimum": 0 },
+          "subtask_id": { "type": "string" },
+          "action_type": { "type": "string", "enum": ["click", "select", "input", "wait", "custom"] },
+          "target": {
+            "type": "object",
+            "properties": {
+              "dom_selector": { "type": "string", "nullable": true },
+              "bbox": { "type": "array", "items": { "type": "number" }, "minItems": 4, "maxItems": 4 },
+              "text": { "type": "string", "nullable": true }
+            },
+            "additionalProperties": false
+          },
+          "hit_expected_target": { "type": "boolean" },
+          "relies_on_text": { "type": "boolean" },
+          "chosen_text": { "type": "string", "nullable": true },
+          "state_snapshot": {
+            "type": "object",
+            "description": "TEM-specific state.",
+            "properties": {
+              "sample_chosen": { "type": "string", "nullable": true },
+              "airlock_pumped": { "type": "boolean", "nullable": true },
+              "specimen_inserted": { "type": "boolean", "nullable": true },
+              "acc_voltage": { "type": "string", "nullable": true },
+              "beam_on": { "type": "boolean", "nullable": true },
+              "magnification": { "type": "string", "nullable": true },
+              "camera_inserted": { "type": "boolean", "nullable": true },
+              "image_acquired": { "type": "boolean", "nullable": true }
+            },
+            "additionalProperties": true
+          },
+          "reward": { "type": "number", "nullable": true },
+          "agent_comment": { "type": "string", "nullable": true }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

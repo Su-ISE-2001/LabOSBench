@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="201px" height="62px" viewBox="0 0 201 62" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46 (44423) - http://www.bohemiancoding.com/sketch -->
+    <title>button-on</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="1.11022302e-14%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#000000" stop-opacity="0.08" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0.08" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="button-on">
+            <path d="M13.294,0.986 L187.693,0.986 C195.035,0.986 200.986,6.912 200.986,14.222 L200.986,48.634 C200.986,55.944 195.035,61.869 187.693,61.869 L13.294,61.869 C5.952,61.869 0,55.944 0,48.634 L0,14.222 C0,6.912 5.952,0.986 13.294,0.986 Z" id="Shape" fill="#C2C2C2"></path>
+            <path d="M17.182,6.236 L183.804,6.236 C190.412,6.236 195.769,11.569 195.769,18.148 L195.769,44.707 C195.769,51.286 190.412,56.619 183.804,56.619 L17.182,56.619 C10.575,56.619 5.218,51.286 5.218,44.707 L5.218,18.148 C5.218,11.569 10.575,6.236 17.182,6.236 Z" id="Shape" fill-opacity="0" fill="#E1E0E0"></path>
+            <path d="M17.182,6.236 L183.804,6.236 C190.412,6.236 195.769,11.569 195.769,18.148 L195.769,44.707 C195.769,51.286 190.412,56.619 183.804,56.619 L17.182,56.619 C10.575,56.619 5.218,51.286 5.218,44.707 L5.218,18.148 C5.218,11.569 10.575,6.236 17.182,6.236 Z" id="Shape" fill="url(#linearGradient-1)" fill-rule="nonzero" style="mix-blend-mode: hard-light;"></path>
+        </g>
+    </g>
+</svg>

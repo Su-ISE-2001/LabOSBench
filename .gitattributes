@@ -1,0 +1,9 @@
+# 二进制可执行文件
+simulator-master/simulator filter=lfs diff=lfs merge=lfs -text
+# 大文件
+simulator-master/htmlbind/static.go filter=lfs diff=lfs merge=lfs -text
+# 所有大于 50MB 的文件使用 LFS
+*.{zip,7z,rar,tar,gz} filter=lfs diff=lfs merge=lfs -text
+*.{pth,pt,h5,ckpt,bin,exe,so,dylib,dll} filter=lfs diff=lfs merge=lfs -text
+# 大图片文件
+*.{jpg,jpeg,png,gif} filter=lfs diff=lfs merge=lfs -text

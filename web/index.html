@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LabOSBench — Benchmark Results</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-bg"></div>
+    <div class="container hero-content">
+      <div class="badge">Benchmark Results</div>
+      <h1 id="paper-title">LabOSBench</h1>
+      <p class="subtitle" id="paper-subtitle"></p>
+      <div class="authors-block" id="paper-authors"></div>
+      <p class="abstract" id="paper-abstract"></p>
+      <div class="hero-links" id="paper-links"></div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="stats-grid" id="stats-grid"></section>
+
+    <section class="panel leaderboard-panel">
+      <div class="panel-header">
+        <h2>Leaderboard</h2>
+        <p>Table 1: Subtask-level average success rate (%) across 8 scientific instrument simulators</p>
+      </div>
+
+      <div class="leaderboard-tabs" role="tablist">
+        <button class="lb-tab active" role="tab" aria-selected="true" data-tab="foundation">Foundation Models</button>
+        <button class="lb-tab" role="tab" aria-selected="false" data-tab="agentic">Agentic Systems</button>
+      </div>
+
+      <div class="leaderboard-section active" id="lb-foundation" role="tabpanel">
+        <div class="section-desc">
+          <span class="section-tag foundation">Foundation</span>
+          Multimodal foundation models without an agent framework, averaged over subtasks
+        </div>
+        <div class="table-wrap">
+          <table class="leaderboard" id="leaderboard-foundation">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Model</th>
+                <th>Affiliation</th>
+                <th>Organization</th>
+                <th>Avg</th>
+                <th>SEM</th>
+                <th>SPM</th>
+                <th>TEM</th>
+                <th>XRD</th>
+                <th>LFM</th>
+                <th>FIB</th>
+                <th>APT</th>
+                <th>EDS</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="leaderboard-section" id="lb-agentic" role="tabpanel" hidden>
+        <div class="section-desc">
+          <span class="section-tag agentic">Agentic</span>
+          Agent frameworks with planning, tool use, and multi-step reasoning, averaged over subtasks
+        </div>
+        <div class="table-wrap">
+          <table class="leaderboard" id="leaderboard-agentic">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>System</th>
+                <th>Affiliation</th>
+                <th>Organization</th>
+                <th>Avg</th>
+                <th>SEM</th>
+                <th>SPM</th>
+                <th>TEM</th>
+                <th>XRD</th>
+                <th>LFM</th>
+                <th>FIB</th>
+                <th>APT</th>
+                <th>EDS</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="baseline-strip" id="baseline-strip"></div>
+    </section>
+
+    <section class="charts-row">
+      <div class="panel chart-panel">
+        <div class="panel-header">
+          <h2>Success by Task Category</h2>
+          <p>Table 2: Best model performance on five instrument-operation categories</p>
+        </div>
+        <canvas id="category-chart"></canvas>
+      </div>
+      <div class="panel chart-panel">
+        <div class="panel-header">
+          <h2>Instrument Comparison</h2>
+          <p>Human experts vs. best agents (subtask-level)</p>
+        </div>
+        <canvas id="instrument-chart"></canvas>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>Eight Instruments</h2>
+        <p>96 subtasks across 8 web-based scientific instrument simulators</p>
+      </div>
+      <div class="instrument-grid" id="instrument-grid"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>End-to-End Workflow Evaluation</h2>
+        <p>GPT-5.5 full-workflow evaluation (10 runs per workflow)</p>
+      </div>
+      <div class="e2e-content">
+        <div class="e2e-summary" id="e2e-summary"></div>
+        <div class="e2e-table-wrap">
+          <table class="e2e-table" id="e2e-table">
+            <thead>
+              <tr>
+                <th>Instrument</th>
+                <th>E2E Success Rate</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>Task Categories</h2>
+      </div>
+      <div class="category-cards" id="category-cards"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>Key Findings &amp; Challenges</h2>
+      </div>
+      <ul class="findings-list" id="findings-list"></ul>
+      <div class="error-grid" id="error-grid"></div>
+    </section>
+
+    <section class="panel comparison-panel" id="comparison-section">
+      <div class="panel-header">
+        <h2>Subtask vs. End-to-End</h2>
+        <p>Best subtask performance vs. GPT-5.5 end-to-end vs. OSWorld human baseline</p>
+      </div>
+      <div class="comparison-bars" id="comparison-bars"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>LabOSBench Benchmark Results Dashboard</p>
+      <p class="footer-note">Data from paper Tables 1–2 · Powered by <code>web/data/results.json</code></p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 65 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>btn-stats-dw</title>
+    <g id="btn-stats-dw" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M64,1 L64,24 C64,25.9329966 63.2164983,27.6829966 61.9497475,28.9497475 C60.6829966,30.2164983 58.9329966,31 57,31 L57,31 L1,31 L1,1 L64,1 Z" id="Rectangle" stroke="#958F8D" stroke-width="2" fill="#F8F7F1"></path>
+        <polygon id="Triangle" stroke="#000000" fill="#000000" transform="translate(32.000000, 16.500000) scale(1, -1) translate(-32.000000, -16.500000) " points="32 10 41 23 23 23"></polygon>
+    </g>
+</svg>

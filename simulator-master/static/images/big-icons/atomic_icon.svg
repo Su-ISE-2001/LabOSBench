@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 268 175" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 44 (41411) - http://www.bohemiancoding.com/sketch -->
+    <title>atomic</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="91.4973472%" y1="86.75%" x2="53.0878323%" y2="13.2578125%" id="linearGradient-1">
+            <stop stop-color="#298EDF" stop-opacity="0.409024004" offset="0%"></stop>
+            <stop stop-color="#CCEEFF" offset="100%"></stop>
+        </linearGradient>
+        <radialGradient cx="66.9192308%" cy="49.7459426%" fx="66.9192308%" fy="49.7459426%" r="33.3168219%" gradientTransform="translate(0.669192,0.497459),scale(1.000000,0.977221),rotate(6.981968),translate(-0.669192,-0.497459)" id="radialGradient-2">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#A9D6F6" stop-opacity="0.703238225" offset="100%"></stop>
+        </radialGradient>
+        <filter x="-107.0%" y="-104.6%" width="314.0%" height="309.1%" filterUnits="objectBoundingBox" id="filter-3">
+            <feGaussianBlur stdDeviation="49.773233 4.75660322" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <linearGradient x1="49.6719287%" y1="62.7059802%" x2="62.9451475%" y2="33.2102784%" id="linearGradient-4">
+            <stop stop-color="#B2B2B2" offset="35%"></stop>
+            <stop stop-color="#FDFDFD" offset="58%"></stop>
+        </linearGradient>
+        <linearGradient x1="62.5500625%" y1="49.0887045%" x2="37.1292816%" y2="64.2308608%" id="linearGradient-5">
+            <stop stop-color="#383838" offset="21%"></stop>
+            <stop stop-color="#DBDBDB" offset="47%"></stop>
+        </linearGradient>
+        <linearGradient x1="75.9380225%" y1="47.4016602%" x2="20.4408539%" y2="56.1383573%" id="linearGradient-6">
+            <stop stop-color="#B2B2B2" offset="0%"></stop>
+            <stop stop-color="#FDFDFD" offset="58%"></stop>
+        </linearGradient>
+        <linearGradient x1="1.99218643%" y1="101.949347%" x2="103.227856%" y2="3.16312503%" id="linearGradient-7">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#A3A3A3" offset="25%"></stop>
+            <stop stop-color="#FFFFFF" offset="56%"></stop>
+            <stop stop-color="#9C9C9C" offset="59%"></stop>
+            <stop stop-color="#D2D2D2" offset="84%"></stop>
+            <stop stop-color="#FFFFFF" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0.17989912%" y1="87.7300678%" x2="99.8237756%" y2="12.31099%" id="linearGradient-8">
+            <stop stop-color="#F5F5F5" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" offset="26%"></stop>
+            <stop stop-color="#9C9C9C" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="75.1382543%" y1="4.31043426%" x2="25.0854601%" y2="95.7944886%" id="linearGradient-9">
+            <stop stop-color="#333333" offset="0%"></stop>
+            <stop stop-color="#C4C4C4" offset="100%"></stop>
+        </linearGradient>
+        <path d="M95.6248693,105.914523 L145.151892,106.085616 L130.152162,21 L123.424595,21 L136.776757,99.2020548 L95.6524136,99.0646736 L95.7077027,85.3150685 L66,102.284247 L95.5704054,119.458904 L95.6248693,105.914523 Z" id="path-10"></path>
+        <filter x="-13.9%" y="-11.2%" width="127.8%" height="122.3%" filterUnits="objectBoundingBox" id="filter-11">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.838754252   0 0 0 0 0.130922973   0 0 0 0 0.130922973  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feOffset dx="0" dy="-2" in="SourceAlpha" result="shadowOffsetOuter2"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter2" result="shadowBlurOuter2"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.839215686   0 0 0 0 0.129411765   0 0 0 0 0.129411765  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter2" result="shadowMatrixOuter2"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="shadowMatrixOuter2"></feMergeNode>
+            </feMerge>
+        </filter>
+        <filter x="-12.6%" y="-10.2%" width="125.3%" height="120.3%" filterUnits="objectBoundingBox" id="filter-12">
+            <feGaussianBlur stdDeviation="1.5" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="1" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.839215686   0 0 0 0 0.129411765   0 0 0 0 0.129411765  0 0 0 0.5 0" type="matrix" in="shadowInnerInner1" result="shadowMatrixInner1"></feColorMatrix>
+            <feGaussianBlur stdDeviation="1.5" in="SourceAlpha" result="shadowBlurInner2"></feGaussianBlur>
+            <feOffset dx="0" dy="-1" in="shadowBlurInner2" result="shadowOffsetInner2"></feOffset>
+            <feComposite in="shadowOffsetInner2" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner2"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.839215686   0 0 0 0 0.129411765   0 0 0 0 0.129411765  0 0 0 0.5 0" type="matrix" in="shadowInnerInner2" result="shadowMatrixInner2"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixInner1"></feMergeNode>
+                <feMergeNode in="shadowMatrixInner2"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="MyScope" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="atomic">
+            <rect id="Rectangle-11" fill="url(#linearGradient-1)" x="0" y="0" width="268" height="175" rx="5"></rect>
+            <ellipse id="Oval" fill="url(#radialGradient-2)" fill-rule="nonzero" filter="url(#filter-3)" cx="135.161772" cy="87.7353383" rx="70.1012658" ry="71.7353383"></ellipse>
+            <polygon id="Shape" fill="#FFFFFF" fill-rule="nonzero" points="137.222973 133.60274 172.697162 154.630137 135.180676 135.708904"></polygon>
+            <polygon id="Shape" fill="url(#linearGradient-4)" fill-rule="nonzero" points="143.624459 127.044521 172.697162 154.630137 137.222973 133.60274"></polygon>
+            <polygon id="Shape" fill="url(#linearGradient-5)" fill-rule="nonzero" points="150.043108 120.486301 172.697162 154.630137 143.624459 127.044521"></polygon>
+            <polygon id="Shape" fill="url(#linearGradient-6)" fill-rule="nonzero" points="154.299324 116.10274 172.697162 154.630137 150.043108 120.486301"></polygon>
+            <polygon id="Shape" stroke="#333333" points="154.848514 117.181507 171.993514 153.910959 136.141757 136.359589"></polygon>
+            <polygon id="Shape" fill="url(#linearGradient-7)" fill-rule="nonzero" points="182.565405 63.260274 140.844189 128.773973 113.350405 134.030822 158.624189 72.1472603"></polygon>
+            <polygon id="Shape" fill="url(#linearGradient-8)" fill-rule="nonzero" points="146.147297 134.75 191.472568 72.3869863 182.565405 63.260274 137.240135 125.623288"></polygon>
+            <polygon id="Shape" fill="url(#linearGradient-9)" fill-rule="nonzero" points="122.12027 143.294521 145.924189 134.527397 137.017027 125.400685 113.144459 134.236301"></polygon>
+            <polygon id="Shape" stroke="#4D4D4D" stroke-linejoin="bevel" points="191.918784 71.9246575 182.994459 62.7979452 158.401081 72.3869863 113.23027 134.133562 113.419054 134.047945 113.178784 133.842466 122.085946 142.986301 145.477973 134.989726 145.701081 135.212329"></polygon>
+            <g id="Combined-Shape" fill-rule="nonzero">
+                <use fill="black" fill-opacity="1" filter="url(#filter-11)" xlink:href="#path-10"></use>
+                <use fill="#F8E21C" fill-rule="evenodd" xlink:href="#path-10"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-12)" xlink:href="#path-10"></use>
+            </g>
+        </g>
+    </g>
+</svg>

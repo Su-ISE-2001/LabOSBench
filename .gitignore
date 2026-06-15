@@ -1,0 +1,76 @@
+# 压缩文件
+*.zip
+
+# 编译后的二进制文件（使用 Git LFS 管理）
+# simulator-master/simulator - 使用 Git LFS
+# simulator-master/htmlbind/static.go - 使用 Git LFS
+simulator-master/*.exe
+simulator-master/*.bin
+
+# 测试结果目录（统一在 results/ 下）
+results/
+**/episode_*/
+benchmarks/apt_benchmark/apt_results_seed/
+
+# 本地完整 OSWorld 副本 / 独立研究代码（不发布）
+OSWorld/
+HIPPO-Agent/
+
+# Python 缓存
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# 虚拟环境
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 日志文件
+*.log
+logs/
+
+# 临时文件
+*.tmp
+*.temp
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 环境变量和密钥
+.env
+*.key
+*.pem
+api_key.py
+
+# 大文件和缓存
+*.pth
+*.pt
+*.h5
+*.ckpt
+
+# 数据目录（如果包含大文件）
+**/data/**/*
+!**/utils/data/**/*
+!web/data/
+!web/data/**
+
+# VM 相关
+.vms/
+vm_data/
+docker_vm_data/
+vmware_vm_data/
+.vmware*
+
+# 其他临时目录
+tmp/
+temp/
+cache/

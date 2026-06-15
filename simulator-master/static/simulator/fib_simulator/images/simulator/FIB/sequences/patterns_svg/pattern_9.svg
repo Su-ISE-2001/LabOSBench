@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1280px" height="859px" viewBox="0 0 1280 859" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>pattern_</title>
+    <desc>Created with Sketch.</desc>
+    <g id="pattern_" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+        <g id="pattern4" transform="translate(368.000000, 601.000000)" fill="#FFFF00" stroke="#FFFF00">
+            <g>
+                <path d="M0.772307692,2.93814433 L250.227692,2.93814433" id="Line" stroke-width="6"></path>
+                <path d="M0.386153846,189.020619 L250.613846,189.020619" id="Line-Copy" stroke-width="4"></path>
+                <path d="M0.386153846,95 L250.613846,95" id="Line-Copy-45" stroke-width="4"></path>
+                <path d="M0.386153846,1.95876289 L0.386153846,189.020619" id="Line-2" stroke-width="4"></path>
+                <path d="M250.613846,2.93814433 L250.613846,189.020619" id="Line-2-Copy" stroke-width="4"></path>
+                <path d="M125.5,2.93814433 L125.5,189.020619" id="Line-2-Copy-2" stroke-width="4"></path>
+            </g>
+        </g>
+    </g>
+</svg>

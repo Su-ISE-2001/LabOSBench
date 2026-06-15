@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1280px" height="859px" viewBox="0 0 1280 859" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>pattern_</title>
+    <desc>Created with Sketch.</desc>
+    <g id="pattern_" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="sample_marker" transform="translate(608.000000, 458.000000)">
+            <path d="M25,31.5 L35,21.5 L25,31.5 L15,21.5 L25,31.5 L25,31.5 Z M25,31.5 L15,41.5 L25,31.5 L35,41.5 L25,31.5 Z" id="Shape" stroke="#F3F302" stroke-width="4" fill="#F3F302" fill-rule="evenodd"></path>
+            <path d="M8,31.5 C8,22.1111593 15.6111593,14.5 25,14.5 C34.3888407,14.5 42,22.1111593 42,31.5 L41.9623138,31.5 L50,31.5 L42,31.5 C42,40.8888407 34.3888407,48.5 25,48.5 C15.6111593,48.5 8,40.8888407 8,31.5 L0,31.5 L8.05900582,31.5 L8,31.5 L8,31.5 Z" id="Path" stroke="#F3F302" stroke-width="4"></path>
+            <polygon id="Triangle" fill="#F3F302" fill-rule="evenodd" transform="translate(25.000000, 5.000000) rotate(180.000000) translate(-25.000000, -5.000000) " points="25 0 29 10 21 10"></polygon>
+        </g>
+        <text id="Al-stub-position" font-family="OpenSans-Semibold, Open Sans" font-size="40" font-weight="500" letter-spacing="-0.571428716" fill="#19FF00">
+            <tspan x="667" y="503">Al stub position</tspan>
+        </text>
+    </g>
+</svg>

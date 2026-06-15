@@ -1,0 +1,225 @@
+<!doctype html>
+<!-- 
+Created  by Andres Vasquez for AMMRF'S https://www.myscope.training
+  —— https://www.andresvasquez.net ——
+copyright:This work is licensed under a Creative Commons Attribution 4.0 International License.
+-->
+<!--< >-->
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>XRD Simulator</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/XRD_simulator.css">
+    <link rel="stylesheet" href="css/custom-dd-jquery-ui.css">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <!-- XRD benchmark logger：用于记录 GUIAgent 在 XRD 任务中的行为与指标 -->
+    <script src="/static/benchmark_xrd.js"></script>
+</head>
+
+<body>
+    <div id="top-bar" class="flex-evenly">
+        <div class="flex" id="top-bar-left">
+            <a id="myscope-logo" href="http://localhost" title="Start Page"></a>
+        </div>
+        <div id="top-instructions" class="top-instructions-on">
+            <p id="top-instructions-txt">Select a specimen from the drop down menu.</p>
+        </div>
+    </div>
+
+    <div id="simulator-base" class="flex modal-is-open">
+        <div id="controls-left">
+            <div id="first-row">
+                <fieldset>
+                    <label id="specimen-label" class="label-disablfed">SPECIMEN</label>
+                    <select id="specimen" autocomplete="off">
+                        <option selected="selected" disabled></option>
+                        <option value="0">3D Printed ABS</option>
+                        <option value="1">316 Powder</option>
+                        <option value="2">Aluminium</option>
+                        <option value="3">Arc Sprayed Copper</option>
+                        <option value="4">Boron Nitride</option>
+                        <option value="5">Carbon Fibre</option>
+                        <option value="6">Glass</option>
+                        <option value="7">Glassy Carbon</option>
+                        <option value="8">HOPG</option>
+                        <option value="9">Ni WC Powder</option>
+                        <option value="10">Paper</option>
+                        <option value="11">Polyethylene</option>
+                        <option value="12">Polypropylene</option>
+                        <option value="13">Polystyrene</option>
+                        <option value="14">Salt NaCl</option>
+                        <option value="15">Sand</option>
+                        <option value="16">Silicon Powder</option>
+                        <option value="17">Sugar</option>
+                        <option value="18">TiC Powder</option>
+                        <option value="19">TiO powder</option>
+                    </select>
+                </fieldset>
+                <div id="doors-div" class="btn-with-title">
+                    <label id="doors-label" class="btn-title label-disabled">DOORS</label>
+                    <button type="button" id="btn-doors" class="btn btn-disabled" value="off" disabled>OPEN</button>
+                </div>
+
+            </div>
+
+
+            <div id="second-row">
+                <div class="two-btns flex-evenly">
+                    <div id="standby-div" class="flex">
+                        <button type="button" id="btn-standby" class="round-btn btn-disabled" value="off" disabled></button>
+                        <label id="standby-label" class="btn-title label-disabled">STANDBY/ON</label>
+                    </div>
+
+                    <div id="power-div" class="btn-with-title">
+                        <label id="power-label" class="btn-title label-disabled">FULL POWER</label>
+                        <button type="button" id="btn-power" class="btn btn-disabled" value="off" disabled>OFF</button>
+                    </div>
+
+                </div>
+                <div id="top-stats" class="flex-evenly">
+                    <div class="stats-div">
+                        <div id="stats-kv" class="stats flex-evenly div-disabled">
+                            <div class="stats-name">
+                                <p class="stat-title">kV</p>
+                            </div>
+                            <div class="stats-value">
+                                <p id="kv-val" class="stat-title">10</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stats-div">
+                        <div id="stats-ma" class="stats flex-evenly div-disabled">
+                            <div class="stats-name">
+                                <p class="stat-title">mA</p>
+                            </div>
+                            <div class="stats-value">
+                                <p id="ma-val" class="stat-title">10</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="third-row">
+
+                <div id="bottom-stats" class="flex-evenly">
+                    <div id="start-div" class="stats-div  div-disabled">
+                        <label id="start-label" class="btn-title">START ANGLE (2&#952;)</label>
+                        <div id="stats-start" class="angle flex-evenly">
+                            <div class="stats-name">
+                                <p id="start-txt" class="stat-title">5&#176;</p>
+                            </div>
+                            <div class="stats-value">
+                                <button type="button" id="btn-start-up" class="btn-stats btn-stats-up btn-disabled" value="on" disabled></button>
+                                <button type="button" id="btn-start-dw" class="btn-stats btn-stats-dw btn-disabled" value="on" disabled></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="end-div" class="stats-div div-disabled">
+                        <label id="end-label" class="btn-title">END ANGLE (2&#952;)</label>
+                        <div id="stats-end" class="angle flex-evenly">
+                            <div class="stats-name">
+                                <p id="end-txt" class="stat-title">80&#176;</p>
+                            </div>
+                            <div class="stats-value">
+                                <button type="button" id="btn-end-up" class="btn-stats btn-stats-up btn-disabled" value="on" disabled></button>
+                                <button type="button" id="btn-end-dw" class="btn-stats btn-stats-dw btn-disabled" value="on" disabled></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="step-options" class="flex-evenly">
+                    <fieldset>
+                        <label id="step-label" class="btn-title label-disabled">STEP SIZE</label>
+                        <select id="step" autocomplete="off">
+                            <option value="empty" selected="selected" disabled></option>
+                            <option value="1">0.005&#176;</option>
+                            <option value="9">0.01&#176;</option>
+                            <option value="15">0.02&#176;</option>
+                        </select>
+                    </fieldset>
+                    <fieldset id="time-step-fieldset">
+                        <label id="time-step-label" class="btn-title label-disabled">SCAN RATE</label>
+                        <select id="time-step" autocomplete="off">
+                            <option value="empty" selected="selected" disabled></option>
+                            <option value="0">0.2 deg/sec</option>
+                            <option value="1">0.08 deg/sec</option>
+                            <option value="2">0.04 deg/sec</option>
+                        </select>
+                    </fieldset>
+                </div>
+
+                <div id="scantime-div" class="btn-with-title div-disabled">
+                    <label id="scantime-label" class="btn-title label-disabled">SCAN TIME</label>
+                    <div id="scantime-value">
+                        <p id="scantime-val" class="stat-title">-</p>
+                    </div>
+                </div>
+            </div>
+            <div id="bottom-row" class="flex-evenly">
+                <button type="button" id="btn-start-scan" class="btn btn-disabled" value="off" disabled>START SCAN</button>
+                <button type="button" id="btn-save-dff" class="btn btn-disabled" value="off" disabled>SAVE DIFFRACTOGRAM</button>
+            </div>
+
+
+            <div id="fil-current" class="channel-slider"></div>
+        </div>
+        <div id="canvas-div">
+            <div class="flex-evenly">
+                <div id="controls-right" class="micrograph-canvas">
+                    <div id="shutter-div" class="btn-with-title">
+                        <label id="shutter-label" class="btn-title">SHUTTER</label>
+                        <div type="button" id="btn-shutter" value="off" disabled>CLOSED</div>
+                    </div>
+
+                </div>
+                <svg id="svg-diagram" viewBox="0 0 2640 2080">
+
+                </svg>
+            </div>
+            <svg id="svg-curve" viewBox="-20 -15 835 655" preserveAspectRatio="none">
+
+            </svg>
+            <canvas id="canvas-curve"></canvas>
+
+        </div>
+    </div>
+
+    <div id="loading-modal" class="flex any-modal">
+        <div class="modal-window">
+            <div class="modal-title flex-between">
+                <p>Loading resources</p><span id="close-loading-modal" class="close-modal totally-hidden">×</span>
+            </div>
+            <div class="flex modal-content">
+                <div class="loading-bar"> </div>
+            </div>
+            <div class="invisible-margin"></div>
+        </div>
+    </div>
+    
+    <!--<div id="modal-resize" class="flex any-modal">
+        <div id="resize-window" class="modal-window">
+            <div class="modal-title-resize flex-between">
+                <p>For an optimal experience:
+                </p><span id="close-resize" class="close-modal">×</span>
+            </div>
+            <div id="resize-content" class="modal-content">
+                <p>If the simulator extends beyond the lower edge of your screen, drag the side edge of your browser until the simulator fits properly within the window.</p>
+                <img src="images/simulator/resize.svg" id="resize-animation" alt="myScope's logo">
+                <br>
+            </div>
+            <div class="invisible-margin"></div>
+        </div>
+    </div>-->
+    
+    <script src="js/anime.min.js"></script>
+    <script src="js/XRD_instruction_steps.js"></script>
+    <script src="js/XRD_steps.js"></script>
+    <script src="js/simulator_snippets.js"></script>
+    <script src="js/XRD_data.js"></script>
+    <script src="js/XRD_simulator.js"></script>
+</body></html>
