@@ -31,8 +31,8 @@
 
 ```bash
 git lfs install
-git clone https://github.com/Su-ISE-2001/LabOSBench.git
-cd LabOSBench
+git clone https://github.com/Su-ISE-2001/LABOSBENCH.git
+cd LABOSBENCH
 git lfs pull
 
 bash install_dependencies.sh
